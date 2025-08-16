@@ -25,13 +25,13 @@ SRCS = main_program/minishell.c \
        builtins/ft_pwd.c \
        builtins/ft_env.c \
        builtins/ft_exit.c \
+       builtins/ft_export.c \
+       builtins/ft_unset.c \
        main_program/utils.c \
-       main_program/ft_split.c 
-       
-       #main_program/execution.c \
-       main_program/exec_relative_absolute_path.c \
+       main_program/ft_split.c \
+       main_program/execution.c \
        main_program/red_in_out.c \
-       main_program/heredoc.c \
+       main_program/heredoc.c
 
 OBJS = $(SRCS:.c=.o)
 

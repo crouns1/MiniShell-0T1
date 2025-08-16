@@ -5,58 +5,58 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 00:14:13 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/07/25 00:14:13 by jait-chd         ###   ########.fr       */
+/*   Created: 2025/08/13 00:00:00 by jait-chd          #+#    #+#             */
+/*   Updated: 2025/08/13 00:00:00 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int handle_redirections(t_exex *exec, int start, int end)
+static int open_file(t_rediraction *r)
 {
-    int i = start;
-    int fd;
+    if (r->type == TOKEN_REDIRECT_OUT)
+        return (open(r->token, O_WRONLY | O_CREAT | O_TRUNC, 0644));
+    if (r->type == TOKEN_APPEND)
+        return (open(r->token, O_WRONLY | O_CREAT | O_APPEND, 0644));
+    if (r->type == TOKEN_REDIRECT_IN)
+        return (open(r->token, O_RDONLY));
+    if (r->type == TOKEN_HEREDOC)
+        return (r->fd);
+    return (-2);
+}
 
-    while (i < end && exec->tokens[i].token)
+static int apply_redirection(t_rediraction *r, int fd)
+{
+    if (fd < 0)
     {
-        if (exec->tokens[i].flag == TOKEN_REDIRECT_OUT && i + 1 < end && exec->tokens[i + 1].flag == TOKEN_FILENAME)
+        perror(r->token);
+        return (-1);
+    }
+    if (r->type == TOKEN_REDIRECT_IN || r->type == TOKEN_HEREDOC)
+        dup2(fd, STDIN_FILENO);
+    else
+        dup2(fd, STDOUT_FILENO);
+    close(fd);
+    return (0);
+}
+
+int handle_redirections(t_list *exec)
+{
+    t_rediraction   *r;
+    int             fd;
+
+    r = exec->rediraction;
+    while (r)
+    {
+        fd = open_file(r);
+        if (fd == -2)
         {
-            fd = open(exec->tokens[i + 1].token, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-            if (fd < 0)
-            {
-                perror(exec->tokens[i + 1].token);
-                return (-1);
-            }
-            dup2(fd, 1);
-            close(fd);
-            i += 2;
+            r = r->next;
+            continue ;
         }
-        else if (exec->tokens[i].flag == TOKEN_REDIRECT_IN && i + 1 < end && exec->tokens[i + 1].flag == TOKEN_FILENAME)
-        {
-            fd = open(exec->tokens[i + 1].token, O_RDONLY);
-            if (fd < 0)
-            {
-                perror(exec->tokens[i + 1].token);
-                return (-1);
-            }
-            dup2(fd, 0);
-            close(fd);
-            i += 2;
-        }
-        else if (exec->tokens[i].flag == TOKEN_APPEND && i + 1 < end && exec->tokens[i + 1].flag == TOKEN_FILENAME)
-        {
-            fd = open(exec->tokens[i + 1].token, O_WRONLY | O_CREAT | O_APPEND, 0644);
-            if (fd < 0)
-            {
-                perror(exec->tokens[i + 1].token);
-                return (-1);
-            }
-            dup2(fd, 1);
-            close(fd);
-            i += 2;
-        }
-        else
-            i++;
+        if (apply_redirection(r, fd) == -1)
+            return (-1);
+        r = r->next;
     }
     return (0);
 }

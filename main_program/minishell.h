@@ -65,6 +65,7 @@ typedef struct s_rediraction
 	struct s_rediraction	*prev;
 	char					*token;
 	int						type;
+        int                                             fd;
 	int						ambiguous;
 	struct s_rediraction	*next;
 }							t_rediraction;
@@ -95,7 +96,7 @@ typedef struct s_env
 typedef struct s_info
 {
 	t_env					*env;
-	unsigned char			exit_status;
+	int exit_status;
 }							t_info;
 
 // Prototypes
@@ -112,6 +113,7 @@ void						free_tokens(t_tokens *tokens);
 t_tokens					*variable_expansion(t_tokens *tokens);
 t_list						*tokens_to_list(t_tokens *tokens);
 void						print_command_list(t_list *list);
+void						free_command_list(t_list *list);
 t_gc						**static_gc(void);
 void						ft_free_all(void);
 int							append_gc(void *ptr);
@@ -131,6 +133,13 @@ void    execute_relative_path(t_list *exec, char **env);
 char    **extract_paths(char **env, t_list *exec);
 char    *join_by_order(char const *s1, char b_slash, char const *s2);
 char **ft_split(char const *s, char c);
+char    *ft_strdup(const char *s);
+void    ft_putstr_fd(char *s, int fd);
+void    ft_putendl_fd(char *s, int fd);
+int     handle_redirections(t_list *exec);
+int     heredoc(char *delimiter);
+void    prepare_heredocs(t_list *exec);
+void    execution(t_list *cmds, char **env);
 #endif
 
 // void cleanup_cmd_flags(t_exex *exec);

@@ -3,64 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crouns <crouns@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/07/25 04:32:53 by crouns           ###   ########.fr       */
+/*   Created: 2025/08/13 00:00:00 by jait-chd          #+#    #+#             */
+/*   Updated: 2025/08/13 00:00:00 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
-static void heredoc_process(t_exex *exec, char *delimiter)
+int heredoc(char *delimiter)
 {
-    char *r_line;
-    int fd[2];
+    int     fd[2];
+    char    *line;
 
     if (pipe(fd) == -1)
-    {
-        perror("pipe");
-        exit(1);
-    }
-    signal(SIGINT, SIG_DFL); 
+        return (-1);
     while (1)
     {
-        r_line = readline("\033[95mheredoc >$\033[0m");
-        if (!r_line)
+        line = readline("heredoc>$");
+        if (!line || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
         {
-            write(2, "warning: heredoc delimited by end-of-file\n", 42);
-            break;
+            free(line);
+            break ;
         }
-        if (strcmp(r_line, delimiter) == 0)
-        {
-            free(r_line);
-            break;
-        }
-        write(fd[1], r_line, strlen(r_line));
+        write(fd[1], line, ft_strlen(line));
         write(fd[1], "\n", 1);
-        free(r_line);
+        free(line);
     }
     close(fd[1]);
-    dup2(fd[0], 0);
-    close(fd[0]);
+    return (fd[0]);
 }
 
-void heredoc(t_exex *exec, int start, int end)
+void    prepare_heredocs(t_list *exec)
 {
-    int i = start;
-    char *delimiter = NULL;
+    t_rediraction   *r;
 
-    while (i < end && exec->tokens[i].token)
+    while (exec)
     {
-        if (exec->tokens[i].flag == TOKEN_HEREDOC && i + 1 < end && exec->tokens[i + 1].flag == TOKEN_DELIMITER)
+        r = exec->rediraction;
+        while (r)
         {
-            delimiter = ft_strdup(exec->tokens[i + 1].token);
-            if (!delimiter)
-                exit(1);
-            heredoc_process(exec, delimiter);
-            free(delimiter);
-            i += 2;
+            if (r->type == TOKEN_HEREDOC)
+                r->fd = heredoc(r->token);
+            r = r->next;
         }
-        else
-            i++;
+        exec = exec->next;
     }
 }
+
