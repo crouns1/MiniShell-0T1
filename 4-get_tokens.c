@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tokens.c                                       :+:      :+:    :+:   */
+/*   4-get_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:20:05 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/04 17:36:01 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/17 03:01:41 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-#include <stdlib.h>
 
 static int	special_cases(char *line)
 {
@@ -53,7 +52,7 @@ static t_tokens	*stack_tokens(t_tokens *tokens, char *s)
 	t_tokens	*new;
 	t_tokens	*last;
 
-        new = ft_malloc(sizeof(t_tokens));
+	new = ft_malloc(sizeof(t_tokens));
 	new->string = s;
 	new->flag = 0;
 	new->next = NULL;
@@ -81,8 +80,6 @@ t_tokens	*split_and_store(char *line)
 		if (len > 0)
 		{
 			string = ft_substr(line, len);
-			if (!string)
-				return (free_tokens(tokens), exit(1), NULL);
 			tokens = stack_tokens(tokens, string);
 		}
 		line += len;

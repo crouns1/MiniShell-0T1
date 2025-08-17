@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:42:02 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/13 06:43:42 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/06 22:26:47 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
+
+/////////// TO RETURN TO ///////////////
 
 t_env	*arr_list(char **env)
 {
@@ -24,12 +25,8 @@ t_env	*arr_list(char **env)
 	i = 0;
 	while (env[i])
 	{
-		node = malloc(sizeof(t_env));
-		if (!node)
-			return (NULL);
+		node = ft_malloc(sizeof(t_env));
 		node->s = ft_substr(env[i], ft_strlen(env[i]));
-		if (!node->s)
-			return (free(node), NULL);
 		node->next = NULL;
 		if (!head)
 			head = node;

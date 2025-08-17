@@ -3,28 +3,30 @@ NAME = minishell
 CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror
 
-SRCS = main_program/minishell.c \
-       main_program/expand_utils.c \
-       main_program/expand.c\
-       main_program/ft_alloc.c\
-       main_program/ft_getenv.c\
-       main_program/linked_list.c\
-       main_program/input_analysis.c\
-       main_program/list.c\
-       main_program/print.c\
-       main_program/static_functions.c \
-       main_program/ft_utils.c \
-       main_program/check_input.c \
-       main_program/get_tokens.c \
-       main_program/signals.c \
-       main_program/exec_relative_absolute_path.c\
-       main_program/path_extraction_utils.c \
-       main_program/check_wht_to_execute.c \
-       main_program/child_parent.c \
-       main_program/init_pids.c \
-       main_program/setup_io_prepare_pipe.c \
-       main_program/size_of_list.c \
-       main_program/wait_for_children.c \
+SRCS = minishell.c \
+       0-env.c \
+       0-ft_utils.c \
+       0-ft_alloc.c \
+       0-static_functions.c \
+       2-check_input.c \
+       3-input_analysis.c \
+       4-get_tokens.c \
+       5-ft_expand_utils.c \
+       5-ft_expand.c \
+       5-getenv.c \
+       5-remove_quotes.c \
+       5-split_and_unquote.c \
+       6-list.c \
+       print.c \
+       signals.c \
+       exec_relative_absolute_path.c\
+       path_extraction_utils.c \
+       check_wht_to_execute.c \
+       child_parent.c \
+       init_pids.c \
+       setup_io_prepare_pipe.c \
+       size_of_list.c \
+       wait_for_children.c \
        builtins/builtins.c \
        builtins/ft_echo.c \
        builtins/ft_cd.c \
@@ -33,11 +35,11 @@ SRCS = main_program/minishell.c \
        builtins/ft_exit.c \
        builtins/ft_export.c \
        builtins/ft_unset.c \
-       main_program/utils.c \
-       main_program/ft_split.c \
-       main_program/execution.c \
-       main_program/red_in_out.c \
-       main_program/heredoc.c
+       utils.c \
+       ft_split.c \
+       execution.c \
+       red_in_out.c \
+       heredoc.c
 
 OBJS = $(SRCS:.c=.o)
 

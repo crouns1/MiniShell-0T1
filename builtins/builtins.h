@@ -13,7 +13,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "../main_program/minishell.h"
+# include "../minishell.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>

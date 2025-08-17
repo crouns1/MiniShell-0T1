@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_alloc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:25:56 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/17 04:34:31 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/09 23:50:08 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "minishell.h"
 #include <stddef.h>
 #include <unistd.h>
-#include "minishell.h"
 
 void	ft_free_all(void)
 {
@@ -98,8 +97,8 @@ void	free_tokens(t_tokens *tokens)
 	while (tokens)
 	{
 		tmp = tokens->next;
-                ft_free(tokens->string);
-                ft_free(tokens);
+		free(tokens->string);
+		free(tokens);
 		tokens = tmp;
 	}
 }

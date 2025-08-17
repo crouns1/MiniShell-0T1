@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 04:04:12 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/17 20:48:30 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-#include "../builtins/builtins.h"
+#include "./builtins/builtins.h"
 // Macros
 # define PROMPT "minishell--> "
 # define WHITESPACES " \t\n\r\v\f"
@@ -69,6 +69,10 @@ typedef struct s_rediraction
 	int						ambiguous;
 	struct s_rediraction	*next;
 }							t_rediraction;
+// this struct for helping me extract paths
+///////////////
+///////////////
+///////////////////
 /* final struct */
 typedef struct s_list
 {
@@ -78,8 +82,10 @@ typedef struct s_list
     char            **paths;
     char            *path;
 	t_rediraction			*rediraction;
+	
 	struct s_list			*next;
-}							t_list;
+}		
+					t_list;
 /* garbge collector */
 typedef struct s_gc
 {
@@ -98,7 +104,7 @@ typedef struct s_info
 	t_env					*env;
 	int exit_status;
 }							t_info;
-
+/*
 // Prototypes
 t_info						*static_info(void);
 t_env						*arr_list(char **env);
@@ -127,6 +133,38 @@ char						*fill_str(int len, char c);
 int							get_var_len(char *s);
 int							get_len(char *s, int reset);
 t_split						*split_preserve_quotes(char *s, char *map);
+*/
+// peer stuff
+t_info						*static_info(void);
+t_env						*arr_list(char **env);
+t_list						*input_analysis(char *line);
+int							ft_strlen(char *s);
+int							ft_strncmp(char *s1, char *s2, int n);
+char						*ft_substr(char *s, int len);
+char						*ft_strchr(char *s, int c);
+int							check_input(char *line);
+t_tokens					*split_and_store(char *line);
+void						free_tokens(t_tokens *tokens);
+t_tokens					*variable_expansion(t_tokens *tokens);
+t_list						*tokens_to_list(t_tokens *tokens);
+void						print_command_list(t_list *list);
+t_gc						**static_gc(void);
+void						ft_free_all(void);
+int							append_gc(void *ptr);
+void						*ft_malloc(size_t size);
+void						ft_free(void *ptr);
+void						free_tokens(t_tokens *tokens);
+t_tokens					*ft_expand(t_tokens *tokens);
+char						*ft_getenv(char *token, int *len);
+char						*ft_strjoin(char *s1, char *s2);
+char						*fill_str(int len, char c);
+int							get_var_len(char *s);
+int							get_len(char *s, int reset);
+t_split						*remove_quotes(t_split *list);
+t_split						*split_and_unquotes(char *string, char *map);
+
+
+//// ddddddd
 void    signals(void);
 void    execute_absolute_path(t_list *exec, char **env);
 void    execute_relative_path(t_list *exec, char **env);

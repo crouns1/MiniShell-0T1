@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 21:59:57 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/13 06:43:00 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/11 22:02:12 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 int	get_len(char *s, int reset)
@@ -52,9 +51,7 @@ char	*fill_str(int len, char c)
 	char	*str;
 	int		i;
 
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
+	str = ft_malloc(len + 1);
 	i = 0;
 	while (i < len)
 		str[i++] = c;
@@ -84,9 +81,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (s1);
 	if (!s1)
 		return (s2);
-	result = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	result = ft_malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	copy_strings(result, s1, s2);
-	free(s1);
-	free(s2);
 	return (result);
 }

@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   6-list.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 18:17:04 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/08 17:46:42 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/17 20:52:21 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	count_words(t_tokens *tokens)
@@ -30,11 +31,11 @@ t_list	*new_node(t_list **list)
 	t_list	*node;
 	t_list	*tmp;
 
-        node = ft_malloc(sizeof(t_list));
-        node->cmds = NULL;
-        node->rediraction = NULL;
-        node->next = NULL;
-        node->prev = NULL;
+	node = ft_malloc(sizeof(t_list));
+	node->cmds = NULL;
+	node->rediraction = NULL;
+	node->next = NULL;
+	node->prev = NULL;
 	if (!*list)
 		*list = node;
 	else
@@ -48,21 +49,34 @@ t_list	*new_node(t_list **list)
 	return (node);
 }
 
+void	ambiguous(t_rediraction **node, t_tokens *tokens)
+{
+	if (tokens->next && tokens->next->flag == TOKEN_FILENAME)
+	{
+		(*node)->token = tokens->next->string;
+		if (tokens->next->next
+			&& tokens->next->flag == tokens->next->next->flag)
+			(*node)->ambiguous = 1;
+	}
+	else
+	{
+		(*node)->ambiguous = 1;
+		return ;
+	}
+}
+
 void	add_rediraction(t_rediraction **red, t_tokens *tokens)
 {
 	t_rediraction	*node;
 	t_rediraction	*tmp;
 
-        node = ft_malloc(sizeof(t_rediraction));
+	node = ft_malloc(sizeof(t_rediraction));
 	node->prev = NULL;
 	node->next = NULL;
-        node->token = ft_strdup(tokens->next->string);
-	node->type = tokens->flag;
-        node->fd = -1;
 	node->ambiguous = 0;
-	if ((tokens->next->next && tokens->next->flag == tokens->next->next->flag)
-		|| !*tokens->next->string)
-		node->ambiguous = 1;
+	node->token = "";
+	node->type = tokens->flag;
+	ambiguous(&node, tokens);
 	if (!*red)
 		*red = node;
 	else
@@ -78,21 +92,19 @@ void	add_rediraction(t_rediraction **red, t_tokens *tokens)
 t_list	*tokens_to_list(t_tokens *tokens)
 {
 	int		i;
-	t_list  *list;
-        t_list  *tmp;
-        t_tokens        *head;
+	t_list	*list;
+	t_list	*tmp;
 
 	list = NULL;
-        head = tokens;
 	while (tokens)
 	{
 		tmp = new_node(&list);
 		i = 0;
-                tmp->cmds = ft_malloc(sizeof(char *) * (count_words(tokens) + 1));
+		tmp->cmds = ft_malloc(sizeof(char *) * (count_words(tokens) + 1));
 		while (tokens && tokens->flag != TOKEN_PIPE)
 		{
 			if (tokens->flag == TOKEN_WORD)
-				tmp->cmds[i++] = ft_strdup(tokens->string);
+				tmp->cmds[i++] = tokens->string;
 			else if (ft_strchr(RED, tokens->flag))
 				add_rediraction(&tmp->rediraction, tokens);
 			tokens = tokens->next;
@@ -101,10 +113,8 @@ t_list	*tokens_to_list(t_tokens *tokens)
 		if (tokens && tokens->flag == TOKEN_PIPE)
 			tokens = tokens->next;
 	}
-        free_tokens(head);
-        return (list);
+	return (list);
 }
-
 void    free_command_list(t_list *list)
 {
         t_list          *next;

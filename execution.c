@@ -6,13 +6,13 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 03:57:21 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 03:58:00 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/17 20:54:56 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
-#include "../builtins/builtins.h"
+#include "./builtins/builtins.h"
 #include "minishell.h"
 
 // static int list_size(t_list *lst)

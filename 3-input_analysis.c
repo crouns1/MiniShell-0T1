@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-#include <stdlib.h>
-
-#define SYNTAX_CASES "\002\003\004\005\006"
-#define REDIRS "\003\004\005\006"
 
 static int	syntax_error(t_tokens *t)
 {
@@ -23,11 +19,11 @@ static int	syntax_error(t_tokens *t)
 	{
 		if (t->flag == TOKEN_PIPE && t->next->flag == TOKEN_PIPE)
 			return (printf("%s\n", SYNTAX_ERR), 1);
-		if (ft_strchr(REDIRS, t->flag) && t->next->flag != TOKEN_WORD)
+		if (ft_strchr(RED, t->flag) && t->next->flag != TOKEN_WORD)
 			return (printf("%s\n", SYNTAX_ERR), 1);
 		t = t->next;
 	}
-	if (t && (t->flag == TOKEN_PIPE || ft_strchr(REDIRS, t->flag)))
+	if (t && (t->flag == TOKEN_PIPE || ft_strchr(RED, t->flag)))
 		return (printf("%s\n", SYNTAX_ERR), 1);
 	return (0);
 }
@@ -88,7 +84,7 @@ static t_tokens	*assign_flags(t_tokens *tokens)
 		tmp = tmp->next;
 	}
 	if (syntax_error(tokens))
-		return (free_tokens(tokens), NULL);
+		return (ft_free_all(), NULL);
 	return (re_assign_flags(tokens));
 }
 
@@ -98,10 +94,13 @@ t_list	*input_analysis(char *line)
 	t_list		*list;
 
 	tokens = split_and_store(line);
+	free(line);
 	tokens = assign_flags(tokens);
 	if (!tokens)
 		return (NULL);
 	tokens = ft_expand(tokens);
+	if (!tokens)
+		return (NULL);
 	list = tokens_to_list(tokens);
 	return (list);
 }

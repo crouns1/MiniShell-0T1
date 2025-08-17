@@ -6,55 +6,11 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 02:54:35 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/17 21:01:55 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int  dup_std_fds(int *in, int *out)
-{
-    *in = dup(STDIN_FILENO);
-    *out = dup(STDOUT_FILENO);
-    if (*in == -1 || *out == -1)
-    {
-        if (*in != -1)
-            close(*in);
-        if (*out != -1)
-            close(*out);
-        return (1);
-    }
-    return (0);
-}
-
-static void restore_std_fds(int in, int out)
-{
-    dup2(in, STDIN_FILENO);
-    dup2(out, STDOUT_FILENO);
-    close(in);
-    close(out);
-}
-
-int     check_what_to_execute(t_list *list, char ***env)
-{
-    t_info  *info;
-    int     saved_in;
-    int     saved_out;
-
-    if (list->next || !is_builtin(list->cmds[0]))
-        return (0);
-    if (dup_std_fds(&saved_in, &saved_out)
-        || handle_redirections(list) == -1)
-    {
-        restore_std_fds(saved_in, saved_out);
-        static_info()->exit_status = 1;
-        return (1);
-    }
-    info = static_info();
-    info->exit_status = run_builtin(list->cmds, env);
-    restore_std_fds(saved_in, saved_out);
-    return (1);
-}
 
 void    history(char *line)
 {
@@ -76,7 +32,6 @@ static void shell_loop(char **env)
 {
     char    *line;
     t_list  *list;
-    signals();
     while (1)
     {
         line = readline(PROMPT);
@@ -88,16 +43,16 @@ static void shell_loop(char **env)
         if (check_input(line))
             continue ;
         list = input_analysis(line);
-       /* if (!list)
+        if (!list)
         {
-            static_info()->exit_status = 258;
+            static_info()->exit_status = 2;
             continue ;
-        }*/
+        }
         prepare_heredocs(list);
         if (!check_what_to_execute(list, &env))
             execution(list, env);
         // print_command_list(list);
-        free_command_list(list);
+        // free_command_list(list);
     }
 }
 
