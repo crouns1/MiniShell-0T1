@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   static_functions.c                                 :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lalex-ku <lalex-ku@42sp.org.br>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 23:17:30 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/17 04:57:08 by jait-chd         ###   ########.fr       */
+/*   Created: 2022/06/22 17:32:45 by lalex-ku          #+#    #+#             */
+/*   Updated: 2022/06/22 17:32:50 by lalex-ku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
-t_gc	**static_gc(void)
+int	main(int argc, char const *argv[])
 {
-	static t_gc	*list;
+	int	pid;
 
-	return (&list);
-}
-
-t_info	*static_info(void)
-{
-	static t_info	info;
-
-	return (&info);
+	pid = fork();
+	open("infile", O_RDONLY);
+	while (1)
+	{
+		printf("Helloo miniHELL %i\n", pid);
+		sleep(1);
+	}
+	return (0);
 }

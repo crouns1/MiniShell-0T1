@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 06:31:38 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/17 05:21:52 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void execute_absolute_path(t_list *exec, char **env)
 {
     if (!exec->cmds[0])
         exit(0);
-    if (exec->cmds[0][0] == '/' || (exec->cmds[0][0] == '.' && exec->cmds[0][1] == '/'))
+    if (exec->cmds[0][0] == '/' || (exec->cmds[0][0] == '.' ))
     {
-        if (access(exec->cmds[0], X_OK) == 0)
+        if (access(exec->cmds[0], X_OK | F_OK) == 0)
         {
             if (execve(exec->cmds[0], exec->cmds, env) == -1)
             {

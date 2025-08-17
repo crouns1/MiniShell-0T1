@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_alloc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:25:56 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/09 23:50:08 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/17 04:34:31 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
 #include <stddef.h>
 #include <unistd.h>
+#include "minishell.h"
 
 void	ft_free_all(void)
 {

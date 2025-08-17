@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 06:42:36 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/17 04:04:12 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,30 +140,14 @@ int     handle_redirections(t_list *exec);
 int     heredoc(char *delimiter);
 void    prepare_heredocs(t_list *exec);
 void    execution(t_list *cmds, char **env);
+int     check_what_to_execute(t_list *list, char ***env);
+void restore_std_fds(int in, int out);
+int  dup_std_fds(int *in, int *out);
+int	list_size(t_list *lst);
+void	wait_children(pid_t *pids, int count);
+void	setup_io(int prev_fd, int pipe_fd[2], int has_next);
+int	prepare_pipe(t_list *cmds, int pipe_fd[2]);
+int init_pids(t_list *cmds, pid_t **pids, int *prev_fd);
+void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2]);
+void	parent_process(int *prev_fd, t_list *cmds, int pipe_fd[2]);
 #endif
-
-// void cleanup_cmd_flags(t_exex *exec);
-// void handle_child(t_exex *exec, char **env, int start, int end, int cmd_count);
-// int allocate_exec(t_exex **exec_ptr, t_arr *arr);
-// int allocate_pids(t_exex *exec, int cmd_count);
-// void init_exec(t_exex *exec, t_arr *arr);
-// void execute_pipeline(t_exex *exec, char **env, int cmd_count);
-// void execute_command(t_exex *exec, char **env, int start, int end);
-// void wait_for_children(t_exex *exec, int cmd_count);
-// void free_exec(t_exex *exec);
-// void close_pipes(t_exex *exec);
-// void setup_pipes(t_exex *exec);
-// char    **split_and_stack(char *line);
-// char    *ft_strchr(char *s, int c);
-// void    create_prompt(t_shell *shell);
-// void    execution(t_arr *arr, char **env);
-// size_t  ft_strlen(const char *s);
-// char    **ft_split(char const *s, char c);
-// int     ft_strncmp(const char *s1, const char *s2, size_t n);
-// char    *ft_strdup(const char *s);
-// char    *ft_substr(char const *s, unsigned int start, size_t len);
-// int     handle_redirections(t_exex *exec, int start, int end);
-// void    heredoc(t_exex *exec, int start, int end);
-// void    setup_pipes(t_exex *exec);
-// void    close_pipes(t_exex *exec);
-// void    free_exec(t_exex *exec);

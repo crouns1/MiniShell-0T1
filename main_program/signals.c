@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:14:17 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 06:14:37 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/17 04:55:36 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,17 @@ void sig_int(void)
 
 void sig_quit(void)
 {
-    // struct sigaction s_quit;
-    // s_quit.sa_handler = handle_sigquit;
-    // sigemptyset(&s_quit.sa_mask);
-    // s_quit.sa_flags = SA_RESTART;
-    // sigaction(SIGQUIT, &s_quit, NULL);
-    signal(SIGQUIT , SIG_IGN);
+     struct sigaction s_quit;
+     s_quit.sa_handler = handle_sigquit;
+     sigemptyset(&s_quit.sa_mask);
+     s_quit.sa_flags = SA_RESTART;
+     sigaction(SIGQUIT, &s_quit, NULL);
+    //signal(SIGQUIT , SIG_IGN);
 }
 
-void    sig_pipe(void)
-{
-    signal(SIGPIPE, SIG_IGN);
-}
 
 void signals(void)
 {
     sig_int();
     sig_quit();
-    sig_pipe();
 }

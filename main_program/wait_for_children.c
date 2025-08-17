@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   wait_for_children.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/13 21:46:16 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 00:00:00 by ChatGPT         ###   ########.fr       */
+/*   Created: 2025/08/16 20:21:12 by jait-chd          #+#    #+#             */
+/*   Updated: 2025/08/16 20:21:38 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
-int	ft_env(char **args, char **env)
+void	wait_children(pid_t *pids, int count)
 {
-	int	i;
+	int i;
+	int status;
+	t_info *info;
 
-	if (args[1])
-		return (write(2, "minishell: env: too many arguments\n", 35), 1);
+	info = static_info();
 	i = 0;
-	while (env[i])
+	while (i < count)
 	{
-		if (strchr(env[i], '='))
+		waitpid(pids[i], &status, 0);
+		if (i == count - 1)
 		{
-			write(1, env[i], strlen(env[i]));
-			write(1, "\n", 1);
+			if (WIFEXITED(status))
+				info->exit_status = WEXITSTATUS(status);
+			else
+				info->exit_status = 1;
 		}
 		i++;
 	}
-	return (0);
 }

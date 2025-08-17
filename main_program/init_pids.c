@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   init_pids.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/13 21:46:16 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 00:00:00 by ChatGPT         ###   ########.fr       */
+/*   Created: 2025/08/16 20:46:55 by jait-chd          #+#    #+#             */
+/*   Updated: 2025/08/16 20:47:05 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
-int	ft_env(char **args, char **env)
+
+int init_pids(t_list *cmds, pid_t **pids, int *prev_fd)
 {
-	int	i;
+    int count;
 
-	if (args[1])
-		return (write(2, "minishell: env: too many arguments\n", 35), 1);
-	i = 0;
-	while (env[i])
-	{
-		if (strchr(env[i], '='))
-		{
-			write(1, env[i], strlen(env[i]));
-			write(1, "\n", 1);
-		}
-		i++;
-	}
-	return (0);
+    count = list_size(cmds);
+    *pids = malloc(sizeof(pid_t) * count);
+    if (!*pids)
+        return (-1);
+    *prev_fd = -1;
+    return (count);
 }

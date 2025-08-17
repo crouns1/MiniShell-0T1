@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   size_of_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/13 21:46:16 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 00:00:00 by ChatGPT         ###   ########.fr       */
+/*   Created: 2025/08/16 20:28:44 by jait-chd          #+#    #+#             */
+/*   Updated: 2025/08/17 04:55:41 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
-int	ft_env(char **args, char **env)
+int	list_size(t_list *lst)
 {
-	int	i;
+	int count;
 
-	if (args[1])
-		return (write(2, "minishell: env: too many arguments\n", 35), 1);
-	i = 0;
-	while (env[i])
+	count = 0;
+	while (lst)
 	{
-		if (strchr(env[i], '='))
-		{
-			write(1, env[i], strlen(env[i]));
-			write(1, "\n", 1);
-		}
-		i++;
+		count++;
+		lst = lst->next;
 	}
-	return (0);
+	return (count);
 }

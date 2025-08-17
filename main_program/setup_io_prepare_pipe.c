@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   static_functions.c                                 :+:      :+:    :+:   */
+/*   setup_io_prepare_pipe.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 23:17:30 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/17 04:57:08 by jait-chd         ###   ########.fr       */
+/*   Created: 2025/08/16 20:25:59 by jait-chd          #+#    #+#             */
+/*   Updated: 2025/08/17 04:55:29 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_gc	**static_gc(void)
+void	setup_io(int prev_fd, int pipe_fd[2], int has_next)
 {
-	static t_gc	*list;
-
-	return (&list);
+	if (prev_fd != -1)
+	{
+		dup2(prev_fd, 0);
+		close(prev_fd);
+	}
+	if (has_next)
+	{
+		close(pipe_fd[0]);
+		dup2(pipe_fd[1], 1);
+		close(pipe_fd[1]);
+	}
 }
 
-t_info	*static_info(void)
+int	prepare_pipe(t_list *cmds, int pipe_fd[2])
 {
-	static t_info	info;
+	t_info *info;
 
-	return (&info);
+	if (!cmds->next)
+		return (0);
+	info = static_info();
+	if (pipe(pipe_fd) == -1)
+	{
+		perror("pipe");
+		info->exit_status = 1;
+		return (-1);
+	}
+	return (0);
 }

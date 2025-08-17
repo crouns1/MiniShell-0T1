@@ -19,6 +19,12 @@ SRCS = main_program/minishell.c \
        main_program/signals.c \
        main_program/exec_relative_absolute_path.c\
        main_program/path_extraction_utils.c \
+       main_program/check_wht_to_execute.c \
+       main_program/child_parent.c \
+       main_program/init_pids.c \
+       main_program/setup_io_prepare_pipe.c \
+       main_program/size_of_list.c \
+       main_program/wait_for_children.c \
        builtins/builtins.c \
        builtins/ft_echo.c \
        builtins/ft_cd.c \
