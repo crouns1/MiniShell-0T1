@@ -55,3 +55,90 @@ int	ft_pwd(char **args)
 	write(1, "\n", 1);
 	return (0);
 }
+
+
+// typedef struct s_env
+// {
+//     char            *key;
+//     char            *value;
+//     int             exported;
+//     struct s_env    *next;
+// }   t_env;
+
+// /* ------------ utils ------------ */
+// static char *ft_strdup_(const char *s)
+// {
+//     size_t len = strlen(s);
+//     char *dup = malloc(len + 1);
+//     if (!dup)
+//         return (NULL);
+//     memcpy(dup, s, len);
+//     dup[len] = '\0';
+//     return (dup);
+// }
+
+// static t_env *find_env(t_env *env, const char *key)
+// {
+//     while (env)
+//     {
+//         if (strcmp(env->key, key) == 0)
+//             return (env);
+//         env = env->next;
+//     }
+//     return (NULL);
+// }
+
+// static void set_env(t_env **env, const char *key, const char *value)
+// {
+//     t_env *node = find_env(*env, key);
+
+//     if (node)
+//     {
+//         if (node->value)
+//             free(node->value);
+//         node->value = ft_strdup_(value);
+//         node->exported = 1;
+//     }
+//     else
+//     {
+//         node = malloc(sizeof(t_env));
+//         if (!node)
+//             return ;
+//         node->key = ft_strdup_(key);
+//         node->value = ft_strdup_(value);
+//         node->exported = 1;
+//         node->next = *env;
+//         *env = node;
+//     }
+// }
+
+// /* ------------ builtin pwd ------------ */
+// int ft_pwd(t_env **env)
+// {
+//     char buf[4096];
+//     char *cwd;
+//     t_env *pwd_var;
+
+//     cwd = getcwd(buf, sizeof(buf));
+//     if (!cwd)
+//     {
+//         /* fallback: use PWD from env if getcwd fails */
+//         pwd_var = find_env(*env, "PWD");
+//         if (pwd_var && pwd_var->value)
+//         {
+//             write(1, pwd_var->value, strlen(pwd_var->value));
+//             write(1, "\n", 1);
+//             return (0);
+//         }
+//         return (1);
+//     }
+//     /* update OLDPWD before overwriting PWD */
+//     pwd_var = find_env(*env, "PWD");
+//     if (pwd_var && pwd_var->value)
+//         set_env(env, "OLDPWD", pwd_var->value);
+//     set_env(env, "PWD", cwd);
+
+//     write(1, cwd, strlen(cwd));
+//     write(1, "\n", 1);
+//     return (0);
+// }

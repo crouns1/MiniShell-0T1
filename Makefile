@@ -39,7 +39,8 @@ SRCS = minishell.c \
        ft_split.c \
        execution.c \
        red_in_out.c \
-       heredoc.c
+       1-heredoc_expantion.c \
+       1-ft_heredoc.c 
 
 OBJS = $(SRCS:.c=.o)
 

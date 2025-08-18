@@ -49,8 +49,9 @@ static void shell_loop(char **env)
             static_info()->exit_status = 2;
             continue ;
         }
-        prepare_heredocs(list);
-        if (!check_what_to_execute(list, &env))
+       // prepare_heredocs(list);
+        ft_heredoc(list);
+       if (!check_what_to_execute(list, &env))
             execution(list, env);
         // print_command_list(list);
         //free_command_list(list); < Makfile cat > p = exit; 
