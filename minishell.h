@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 20:48:30 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 05:25:16 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 #include "./builtins/builtins.h"
+#include	<sys/stat.h>
 // Macros
 # define PROMPT "minishell--> "
 # define WHITESPACES " \t\n\r\v\f"
@@ -162,7 +163,7 @@ int							get_var_len(char *s);
 int							get_len(char *s, int reset);
 t_split						*remove_quotes(t_split *list);
 t_split						*split_and_unquotes(char *string, char *map);
-
+void						free_command_list(t_list *list);
 
 //// ddddddd
 void    signals(void);

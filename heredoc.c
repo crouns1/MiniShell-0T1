@@ -6,33 +6,78 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 00:00:00 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 00:00:00 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 06:37:03 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+/*
+int    global_e(int status)
+{
+    static int value;
+    if (status == -1)
+        return (value);
+    value = status;
+    return(value);
+}
+int    global_e(int status)
+{
+    static int value;
+    if (status == -1)
+        return (value);
+    value = status;
+    return(value);
+}*/
 
+void sighand()
+{
+    write(1, "\n", 1);
+    ft_free_all();
+    exit(130);
+}
 int heredoc(char *delimiter)
 {
-    int     fd[2];
     char    *line;
-
-    if (pipe(fd) == -1)
-        return (-1);
-    while (1)
+    int fds;
+    int e = 0;
+    pid_t pid;
+    
+    fds = open("text.txt", O_CREAT | O_RDWR, 0644);
+    
+    pid = fork();
+    if (pid == -1)
+        perror("Error");
+    if (pid == 0)
     {
-        line = readline("heredoc>$");
-        if (!line || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
+        signal(SIGINT, SIG_DFL);
+        while (1)
         {
+            signal(SIGINT, sighand);
+            line = readline("> ");
+            if (!line || ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
+            {
+                free(line);
+                break ;
+            }
+            write(fds, line, ft_strlen(line));
+            write(fds, "\n", 1);
             free(line);
-            break ;
         }
-        write(fd[1], line, ft_strlen(line));
-        write(fd[1], "\n", 1);
-        free(line);
+        exit(0);
     }
-    close(fd[1]);
-    return (fd[0]);
+    signal(SIGINT, SIG_IGN);
+    close(fds);
+    waitpid(pid , &e , 0);
+    if (WIFEXITED(e))
+    {
+        static_info()->exit_status = WEXITSTATUS(e);
+    }
+    else if (WIFSIGNALED(e))
+        static_info()->exit_status = WTERMSIG(e) + 128;
+    printf("%d", static_info()->exit_status);
+    fds = open("text.txt", O_RDWR);
+    unlink("text.txt");
+    return (fds);
 }
 
 void    prepare_heredocs(t_list *exec)

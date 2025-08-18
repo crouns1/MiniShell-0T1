@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:40:19 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/16 20:40:52 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 02:52:42 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int     check_what_to_execute(t_list *list, char ***env)
 
     if (list->next || !is_builtin(list->cmds[0]))
         return (0);
-    if (dup_std_fds(&saved_in, &saved_out)
-        || handle_redirections(list) == -1)
+    if (dup_std_fds(&saved_in, &saved_out) || handle_redirections(list) == -1)
     {
         restore_std_fds(saved_in, saved_out);
         static_info()->exit_status = 1;

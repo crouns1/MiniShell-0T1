@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_analysis.c                                   :+:      :+:    :+:   */
+/*   3-input_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:19:23 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/07 18:16:46 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/18 04:50:08 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	syntax_error(t_tokens *t)
@@ -84,7 +85,7 @@ static t_tokens	*assign_flags(t_tokens *tokens)
 		tmp = tmp->next;
 	}
 	if (syntax_error(tokens))
-		return (ft_free_all(), NULL);
+		return (NULL);
 	return (re_assign_flags(tokens));
 }
 

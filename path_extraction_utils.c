@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:26:37 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/13 06:38:14 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 05:25:28 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ char *join_by_order(char const *s1, char b_slash, char const *s2) {
 	if (!s1 || !s2)
 		return NULL;
 
-	str = (char *)malloc(sizeof(char) * (strlen(s1) + 1 + strlen(s2) + 1));
+	str = (char *)malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 2));
 	if (!str)
 		return NULL;
 
+	// printf("len = %ld + 1 \n", (strlen(s1) + strlen(s2)));
 	while (s1[j]) 
 		str[i++] = s1[j++];
 	str[i++] = b_slash;
 	j = 0;
 	while (s2[j]) str[i++] = s2[j++];
+	// printf("i = %ld\n", i);
 	str[i] = '\0';
+	// printf("%s\n", str);
 	return str;
 }

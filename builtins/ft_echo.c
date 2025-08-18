@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 21:46:13 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 03:35:39 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 02:54:10 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-        if(*args[i] == '$')
-            write(1,"$",1);
 		write(1, args[i], strlen(args[i]));
 		if (args[i + 1])
 			write(1, " ", 1);

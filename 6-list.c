@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 18:17:04 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/17 20:52:21 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 05:57:28 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_list	*new_node(t_list **list)
 	node = ft_malloc(sizeof(t_list));
 	node->cmds = NULL;
 	node->rediraction = NULL;
+	node->path = NULL;
+	node->paths = NULL;
 	node->next = NULL;
 	node->prev = NULL;
 	if (!*list)
@@ -51,7 +53,7 @@ t_list	*new_node(t_list **list)
 
 void	ambiguous(t_rediraction **node, t_tokens *tokens)
 {
-	if (tokens->next && tokens->next->flag == TOKEN_FILENAME)
+	if (tokens->next && (tokens->next->flag == TOKEN_FILENAME  || tokens->next->flag == TOKEN_DELIMITER))
 	{
 		(*node)->token = tokens->next->string;
 		if (tokens->next->next
@@ -75,6 +77,7 @@ void	add_rediraction(t_rediraction **red, t_tokens *tokens)
 	node->next = NULL;
 	node->ambiguous = 0;
 	node->token = "";
+	node->fd = -1;
 	node->type = tokens->flag;
 	ambiguous(&node, tokens);
 	if (!*red)
@@ -130,16 +133,17 @@ void    free_command_list(t_list *list)
                         while (list->cmds[i])
                                 ft_free(list->cmds[i++]);
                         ft_free(list->cmds);
+						list->cmds = NULL; 
                 }
-        while (list->rediraction)
-        {
-                r_next = list->rediraction->next;
-                if (list->rediraction->fd >= 0)
+        		while (list->rediraction)
+        		{	
+                	r_next = list->rediraction->next;
+                	if (list->rediraction->fd >= 0)
                         close(list->rediraction->fd);
-                ft_free(list->rediraction->token);
-                ft_free(list->rediraction);
-                list->rediraction = r_next;
-        }
+                	ft_free(list->rediraction->token);
+                	ft_free(list->rediraction);
+                	list->rediraction = r_next;
+        		}
                 while (list->rediraction)
                 {
                         r_next = list->rediraction->next;

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*   5-ft_expand_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 21:59:57 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/11 22:02:12 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/18 01:29:12 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
 
+# include "minishell.h"
 int	get_len(char *s, int reset)
 {
 	static int	in_single;
@@ -27,7 +27,7 @@ int	get_len(char *s, int reset)
 		else if (s[i] == '"' && !in_single)
 			in_double = !in_double;
 		else if (!in_single && s[i] == '$' && (ft_strchr(ISVAL1, s[i + 1])
-				|| s[i + 1] == '?'))
+				|| s[i + 1] == '?') && s[i + 1])
 			break ;
 		i++;
 	}

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   5-ft_expand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 21:58:52 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/17 07:21:33 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/18 01:25:44 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	get_variables(char *token, char **string, char **map)

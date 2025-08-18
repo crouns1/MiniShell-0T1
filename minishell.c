@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 21:01:55 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 05:39:27 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void shell_loop(char **env)
     t_list  *list;
     while (1)
     {
+        list = NULL;
         line = readline(PROMPT);
         if(!line) {
             write(1,"exit\n",5);
@@ -52,7 +53,7 @@ static void shell_loop(char **env)
         if (!check_what_to_execute(list, &env))
             execution(list, env);
         // print_command_list(list);
-        // free_command_list(list);
+        //free_command_list(list); < Makfile cat > p = exit; 
     }
 }
 
@@ -63,6 +64,7 @@ int     main(int ac, char **av, char **env)
     initialise_info(env);
     signals();
     shell_loop(env);
+    ft_free_all();
     return (0);
 }
 
