@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:14:17 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 04:55:36 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 22:18:29 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,13 @@ void handle_sigquit(int sig)
 
 void sig_int(void)
 {
-    struct sigaction s_int;
-    s_int.sa_handler = handle_sigint;
-    sigemptyset(&s_int.sa_mask);
-    s_int.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &s_int, NULL);
+   signal(SIGINT , handle_sigint);
 }
 
 void sig_quit(void)
 {
-     struct sigaction s_quit;
-     s_quit.sa_handler = handle_sigquit;
-     sigemptyset(&s_quit.sa_mask);
-     s_quit.sa_flags = SA_RESTART;
-     sigaction(SIGQUIT, &s_quit, NULL);
-    //signal(SIGQUIT , SIG_IGN);
+   
+    signal(SIGQUIT , handle_sigquit);
 }
 
 

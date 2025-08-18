@@ -20,6 +20,7 @@ SRCS = minishell.c \
        print.c \
        signals.c \
        exec_relative_absolute_path.c\
+       exec_path_utils.c \
        path_extraction_utils.c \
        check_wht_to_execute.c \
        child_parent.c \

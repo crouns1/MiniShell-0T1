@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 03:57:21 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 02:45:17 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 22:25:33 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ static void finalize_execution(int prev_fd, pid_t *pids, int cmd_count)
     free(pids);
 }
 
-static void run_commands(t_list *cmds, char **env,
-        pid_t *pids, int prev_fd)
+static void run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
 {
     int     pipe_fd[2];
     int     i;
-    signal(SIGINT , SIG_IGN);
-    signal(SIGQUIT , SIG_IGN);
     i = 0;
     while (cmds)
     {

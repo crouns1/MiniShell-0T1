@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 05:39:27 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 22:22:55 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void shell_loop(char **env)
     t_list  *list;
     while (1)
     {
-        list = NULL;
+        signal(SIGINT , SIG_IGN);
+        signal(SIGQUIT , SIG_IGN);
         line = readline(PROMPT);
         if(!line) {
             write(1,"exit\n",5);
@@ -49,7 +50,6 @@ static void shell_loop(char **env)
             static_info()->exit_status = 2;
             continue ;
         }
-       // prepare_heredocs(list);
         ft_heredoc(list);
        if (!check_what_to_execute(list, &env))
             execution(list, env);

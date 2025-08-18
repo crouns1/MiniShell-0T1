@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 05:25:16 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:57:23 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,4 +190,7 @@ int	prepare_pipe(t_list *cmds, int pipe_fd[2]);
 int init_pids(t_list *cmds, pid_t **pids, int *prev_fd);
 void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2]);
 void	parent_process(int *prev_fd, t_list *cmds, int pipe_fd[2]);
+int check_dir(const char *path);
+void check_access_abs_path(t_list *exec);
+void check_relat_path_edge_cases(t_list *exec );
 #endif

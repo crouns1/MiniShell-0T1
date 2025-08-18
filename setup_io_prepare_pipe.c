@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:25:59 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/17 04:55:29 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 22:26:53 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	prepare_pipe(t_list *cmds, int pipe_fd[2])
 	info = static_info();
 	if (pipe(pipe_fd) == -1)
 	{
-		perror("pipe");
+		ft_putendl_fd("error : pipe failed" , 2);
 		info->exit_status = 1;
 		return (-1);
 	}
