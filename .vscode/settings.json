@@ -6,6 +6,7 @@
         "builtins.h": "c",
         "stat.h": "c",
         "numbers": "c",
-        "random": "c"
+        "random": "c",
+        "string.h": "c"
     }
 }

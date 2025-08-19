@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:24:03 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 22:27:11 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:43:13 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2])
 {
-	
-	// signal(SIGINT, SIG_DFL);
-	// signal(SIGQUIT, SIG_DFL);
+	//
 	setup_io(prev_fd, pipe_fd, cmds->next != NULL);
 	if (handle_redirections(cmds) == -1)
 		exit(1);

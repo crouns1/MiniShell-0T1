@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:14:17 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 22:18:29 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:45:24 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void sig_int(void)
 void sig_quit(void)
 {
    
-    signal(SIGQUIT , handle_sigquit);
+    signal(SIGQUIT , SIG_IGN);
 }
 
 

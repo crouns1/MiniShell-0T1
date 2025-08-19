@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 22:22:55 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 01:31:07 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void shell_loop(char **env)
         list = input_analysis(line);
         if (!list)
         {
-            static_info()->exit_status = 2;
+            // static_info()->exit_status = 2;
             continue ;
         }
         ft_heredoc(list);

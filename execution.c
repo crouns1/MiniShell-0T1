@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 03:57:21 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 22:25:33 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:16:17 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
-#include "./builtins/builtins.h"
+
 #include "minishell.h"
 
 static void finalize_execution(int prev_fd, pid_t *pids, int cmd_count)

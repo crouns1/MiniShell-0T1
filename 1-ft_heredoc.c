@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   1-ft_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:29:55 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/18 12:40:17 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:14:35 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*get_name(void)

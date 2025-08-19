@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 20:57:23 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 01:10:54 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-#include "./builtins/builtins.h"
 #include	<sys/stat.h>
 // Macros
 # define PROMPT "minishell--> "
@@ -32,7 +31,7 @@
 # define FILE_OP "\003\004\005"
 # define TOKEN_WORD 1
 # define TOKEN_PIPE 2
-# define TOKEN_REDIRECT_IN 3
+# define TOKEN_REDIRECT_IN 3	
 # define TOKEN_REDIRECT_OUT 4
 # define TOKEN_APPEND 5
 # define TOKEN_HEREDOC 6
@@ -193,4 +192,16 @@ void	parent_process(int *prev_fd, t_list *cmds, int pipe_fd[2]);
 int check_dir(const char *path);
 void check_access_abs_path(t_list *exec);
 void check_relat_path_edge_cases(t_list *exec );
+
+/// builtins
+int	is_builtin(char *cmd);
+int	run_builtin(char **cmd, char ***env);
+int	ft_echo(char **args);
+int	ft_cd(char **args);
+int	ft_pwd(char **args);
+int	ft_exit(char **args);
+int	ft_env(char **args, char **env);
+int	ft_export(char **args, char ***env);
+int	ft_unset(char **args, char ***env);
+
 #endif

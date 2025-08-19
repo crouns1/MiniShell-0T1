@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 22:14:41 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:40:44 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void execute_absolute_path(t_list *exec, char **env)
     {
         if(!ft_strncmp(exec->cmds[0], ".", ft_strlen(exec->cmds[0])))
         {
-		ft_putstr_fd(" .: filename argument required\n", 2);
+		ft_putstr_fd(" . : filename argument required\n", 2);
 		exit(2);
 	}
 	if (!ft_strncmp(exec->cmds[0], "..", ft_strlen(exec->cmds[0])))
 	{
-		ft_putstr_fd(" ..: command not found\n", 2);
+		ft_putstr_fd(" .. : command not found\n", 2);
 		exit(127);
     }
         if(check_dir(exec->cmds[0]))

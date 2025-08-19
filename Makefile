@@ -28,14 +28,14 @@ SRCS = minishell.c \
        setup_io_prepare_pipe.c \
        size_of_list.c \
        wait_for_children.c \
-       builtins/builtins.c \
-       builtins/ft_echo.c \
-       builtins/ft_cd.c \
-       builtins/ft_pwd.c \
-       builtins/ft_env.c \
-       builtins/ft_exit.c \
-       builtins/ft_export.c \
-       builtins/ft_unset.c \
+       builtins.c \
+       ft_echo.c \
+       ft_cd.c \
+       ft_pwd.c \
+       ft_env.c \
+       ft_exit.c \
+       ft_export.c \
+       ft_unset.c \
        utils.c \
        ft_split.c \
        execution.c \

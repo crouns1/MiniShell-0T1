@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-input_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:19:23 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/18 04:50:08 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 01:33:04 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ static t_tokens	*assign_flags(t_tokens *tokens)
 		tmp = tmp->next;
 	}
 	if (syntax_error(tokens))
+	{
+		static_info()->exit_status = 2;
 		return (NULL);
+	}
 	return (re_assign_flags(tokens));
 }
 
