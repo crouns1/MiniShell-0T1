@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_for_children.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:21:12 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/16 20:21:38 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 22:54:43 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	wait_children(pid_t *pids, int count)
 	int i;
 	int status;
 	t_info *info;
+	int sig;
 
 	info = static_info();
 	i = 0;
@@ -27,6 +28,20 @@ void	wait_children(pid_t *pids, int count)
 		{
 			if (WIFEXITED(status))
 				info->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				sig = WTERMSIG(status);
+				if (sig == SIGINT)
+				{
+					write(1, "\n", 1);
+					info->exit_status = 130;
+				}
+				else if (sig == SIGQUIT)
+				{
+					write(1, "core dump\n", 11);
+					info->exit_status = 131;
+				}
+			}
 			else
 				info->exit_status = 1;
 		}

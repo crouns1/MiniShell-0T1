@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 03:57:21 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/19 00:16:17 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 23:23:46 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ static void run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
         pids[i] = fork();
         if (pids[i] == -1)
             break ;
-        if (pids[i] == 0)
+        if (pids[i] == 0) {
+            setup_signals_child();
             child_process(cmds, &env, prev_fd, pipe_fd);
+            
+        }
         parent_process(&prev_fd, cmds, pipe_fd);
         cmds = cmds->next;
         i++;
@@ -47,7 +50,8 @@ void    execution(t_list *cmds)
     int     prev_fd;
     int     cmd_count;
     char    **env;
-
+    signal(SIGINT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
     env = env_to_array(static_info()->env);
     cmd_count = init_pids(cmds, &pids, &prev_fd);
     if (cmd_count < 0)

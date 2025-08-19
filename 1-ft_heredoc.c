@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:29:55 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/19 00:14:35 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/20 00:02:09 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	child(int fd, char *delimiter, int f)
 {
 	char	*s;
 	char	*line;
-	setup_signals_heredoc();
+	// setup_signals_heredoc();
 
 	while (1)
 	{
@@ -78,7 +78,6 @@ static void	child(int fd, char *delimiter, int f)
 		free(line);
 		s = NULL;
 	}
-	setup_signals_parent();
 }
 
 int	heredocument(char *delimiter)
@@ -87,19 +86,42 @@ int	heredocument(char *delimiter)
 	int		fd;
 	char	*name;
 	pid_t	pid;
-
+	// int status = 0;
+	// int sig;
 	name = get_name();
 	delimiter = quotes(delimiter, &f);
 	fd = open(name, O_CREAT | O_RDWR, 0644);
+	// signal(SIGINT , SIG_IGN);
+		// setup_signals_heredoc();
+
 	pid = fork();
 	if (pid == -1)
-		perror("Error");
+	ft_putendl_fd("Error : fork failed on herdoc" , 2);
 	if (pid == 0)
 	{
+		// setup_signals_heredoc();
+		// signal(SIGINT , SIG_DFL);
 		child(fd, delimiter, f);
 		exit(0);
 	}
 	waitpid(pid, NULL, 0);
+		//  if (WIFEXITED(status))
+		// 	 static_info()->exit_status = 0;
+		// 	if (WIFSIGNALED(status))
+		// 	{
+		// 		sig = WTERMSIG(status);
+		// 		if (sig == SIGINT)
+		// 		{
+		// 			write(1, "xxxxxxxxxxx\n", 13);
+		// 			static_info()->exit_status = 130;
+		// 		}
+		// 		else if (sig == SIGQUIT)
+		// 		{
+		// 			write(1, "core dump\n", 11);
+		// 			static_info()->exit_status = 131;
+		// 			// info->exit_status = 131;
+		// 		}
+		// 	}
 	close(fd);
 	fd = open(name, O_RDWR);
 	unlink(name);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_parent.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:24:03 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 23:43:13 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/19 22:10:51 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2])
 {
-	//
-	setup_signals_child();
 	setup_io(prev_fd, pipe_fd, cmds->next != NULL);
 	if (handle_redirections(cmds) == -1)
-		exit(1);
+	exit(1);
 	if (is_builtin(cmds->cmds[0]))
 		exit(run_builtin(cmds->cmds));
 	execute_absolute_path(cmds, *env);
