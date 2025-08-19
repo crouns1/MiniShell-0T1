@@ -12,21 +12,33 @@
 
 #include "minishell.h"
 
-int	ft_env(char **args, char **env)
+int ft_env(void)
 {
-	int	i;
-
-	if (args[1])
-		return (write(2, "minishell: env: too many arguments\n", 35), 1);
-	i = 0;
-	while (env[i])
-	{
-		if (strchr(env[i], '='))
-		{
-			write(1, env[i], strlen(env[i]));
-			write(1, "\n", 1);
-		}
-		i++;
-	}
-	return (0);
+    t_env *env = static_info()->env;
+    while (env)
+    {
+        printf("%s\n", env->s);
+        env = env->next;
+    }
+    return 0;
 }
+
+
+// int	ft_env(char **args, char **env)
+// {
+// 	int	i;
+
+// 	if (args[1])
+// 		return (write(2, "minishell: env: too many arguments\n", 35), 1);
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		if (strchr(env[i], '='))
+// 		{
+// 			write(1, env[i], strlen(env[i]));
+// 			write(1, "\n", 1);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }

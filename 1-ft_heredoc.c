@@ -57,6 +57,7 @@ static void	child(int fd, char *delimiter, int f)
 {
 	char	*s;
 	char	*line;
+	setup_signals_heredoc();
 
 	while (1)
 	{
@@ -77,6 +78,7 @@ static void	child(int fd, char *delimiter, int f)
 		free(line);
 		s = NULL;
 	}
+	setup_signals_parent();
 }
 
 int	heredocument(char *delimiter)

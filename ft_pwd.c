@@ -11,6 +11,24 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int ft_pwd(void)
+{
+    char *pwd = get_env_value(static_info()->env, "PWD");
+    if (!pwd)
+    {
+        char buf[4096];
+        if (getcwd(buf, sizeof(buf)))
+            printf("%s\n", buf);
+        else
+            perror("pwd");
+    }
+    else
+        printf("%s\n", pwd);
+    return 0;
+}
+
+
 /*
 int	ft_pwd(char **args)
 {
@@ -25,36 +43,40 @@ int	ft_pwd(char **args)
 		write(1, "\n", 1);
 		return (0);
 }*/
-#include <errno.h>
-#include <string.h>
-/* If you have your own env getter,
-	replace getenv("PWD") with ms_getenv("PWD") */
-int	ft_pwd(char **args)
-{
-	char cwd[1024];
-	if (args[1] && args[1][0] == '-' && args[1][1])
-		return (write(2, "minishell: pwd: invalid option\n", 31), 1);
-	if (!getcwd(cwd, sizeof(cwd)))
-	{
-		/* Only special-case “directory vanished / inaccessible” */
-		if (errno == ENOENT || errno == EACCES)
-		{
-			const char *lpwd = getenv("PWD"); /* or ms_getenv("PWD") */
-			if (lpwd && *lpwd)
-			{
-				write(1, lpwd, strlen(lpwd));
-				write(1, "\n", 1);
-				return (0);
-			}
-		}
-		/* Otherwise keep your original behavior */
-		perror("pwd");
-		return (1);
-	}
-	write(1, cwd, strlen(cwd));
-	write(1, "\n", 1);
-	return (0);
-}
+
+
+
+
+// #include <errno.h>
+// #include <string.h>
+// /* If you have your own env getter,
+// 	replace getenv("PWD") with ms_getenv("PWD") */
+// int	ft_pwd(char **args)
+// {
+// 	char cwd[1024];
+// 	if (args[1] && args[1][0] == '-' && args[1][1])
+// 		return (write(2, "minishell: pwd: invalid option\n", 31), 1);
+// 	if (!getcwd(cwd, sizeof(cwd)))
+// 	{
+// 		/* Only special-case “directory vanished / inaccessible” */
+// 		if (errno == ENOENT || errno == EACCES)
+// 		{
+// 			const char *lpwd = getenv("PWD"); /* or ms_getenv("PWD") */
+// 			if (lpwd && *lpwd)
+// 			{
+// 				write(1, lpwd, strlen(lpwd));
+// 				write(1, "\n", 1);
+// 				return (0);
+// 			}
+// 		}
+// 		/* Otherwise keep your original behavior */
+// 		perror("pwd");
+// 		return (1);
+// 	}
+// 	write(1, cwd, strlen(cwd));
+// 	write(1, "\n", 1);
+// 	return (0);
+// }
 
 
 // typedef struct s_env

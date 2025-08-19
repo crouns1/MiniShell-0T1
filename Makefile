@@ -36,6 +36,7 @@ SRCS = minishell.c \
        ft_exit.c \
        ft_export.c \
        ft_unset.c \
+       ft_unset_env.c \
        utils.c \
        ft_split.c \
        execution.c \

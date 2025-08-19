@@ -12,20 +12,47 @@
 
 #include "minishell.h"
 
-int	ft_cd(char **args)
+int ft_cd(char **args)
 {
-	char	*path;
+    char *dir;
+    char cwd[4096];
+    t_info *info = static_info();
 
-	if (args[1] && args[2])
-		return (write(2, "minishell: cd: too many arguments\n", 34), 1);
-	path = args[1] ? args[1] : getenv("HOME");
-	if (!path)
-		return (write(2, "minishell: cd: HOME not set\n", 28), 1);
-	if (chdir(path))
-	{
-		write(2, "minishell: cd: ", 15);
-		perror(path);
-		return (1);
-	}
-	return (0);
+    if (!args[1])
+        dir = get_env_value(info->env, "HOME");
+    else
+        dir = args[1];
+
+    if (!dir || chdir(dir) != 0)
+    {
+        perror("cd");
+        info->exit_status = 1;
+        return 1;
+    }
+
+    if (getcwd(cwd, sizeof(cwd)))
+    {
+        set_env(&info->env, "OLDPWD", get_env_value(info->env, "PWD"));
+        set_env(&info->env, "PWD", cwd);
+    }
+    return 0;
 }
+
+
+// int	ft_cd(char **args)
+// {
+// 	char	*path;
+
+// 	if (args[1] && args[2])
+// 		return (write(2, "minishell: cd: too many arguments\n", 34), 1);
+// 	path = args[1] ? args[1] : getenv("HOME");
+// 	if (!path)
+// 		return (write(2, "minishell: cd: HOME not set\n", 28), 1);
+// 	if (chdir(path))
+// 	{
+// 		write(2, "minishell: cd: ", 15);
+// 		perror(path);
+// 		return (1);
+// 	}
+// 	return (0);
+// }

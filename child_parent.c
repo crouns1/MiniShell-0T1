@@ -15,11 +15,12 @@
 void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2])
 {
 	//
+	setup_signals_child();
 	setup_io(prev_fd, pipe_fd, cmds->next != NULL);
 	if (handle_redirections(cmds) == -1)
 		exit(1);
 	if (is_builtin(cmds->cmds[0]))
-		exit(run_builtin(cmds->cmds, env));
+		exit(run_builtin(cmds->cmds));
 	execute_absolute_path(cmds, *env);
 	execute_relative_path(cmds, *env);
 	ft_putstr_fd(cmds->cmds[0], 2);

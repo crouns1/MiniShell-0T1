@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-
 #include "minishell.h"
 
 static void finalize_execution(int prev_fd, pid_t *pids, int cmd_count)
@@ -44,12 +41,14 @@ static void run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
     finalize_execution(prev_fd, pids, i);
 }
 
-void    execution(t_list *cmds, char **env)
+void    execution(t_list *cmds)
 {
     pid_t   *pids;
     int     prev_fd;
     int     cmd_count;
+    char    **env;
 
+    env = env_to_array(static_info()->env);
     cmd_count = init_pids(cmds, &pids, &prev_fd);
     if (cmd_count < 0)
         return ;

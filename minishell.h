@@ -166,7 +166,6 @@ void						free_command_list(t_list *list);
 void    ft_heredoc(t_list *list);
 void    get_variables_heredoc(char *token, char **string);
 //// ddddddd
-void    signals(void);
 void    execute_absolute_path(t_list *exec, char **env);
 void    execute_relative_path(t_list *exec, char **env);
 char    **extract_paths(char **env, t_list *exec);
@@ -178,8 +177,8 @@ void    ft_putendl_fd(char *s, int fd);
 int     handle_redirections(t_list *exec);
 int     heredoc(char *delimiter);
 void    prepare_heredocs(t_list *exec);
-void    execution(t_list *cmds, char **env);
-int     check_what_to_execute(t_list *list, char ***env);
+void    execution(t_list *cmds);
+int     check_what_to_execute(t_list *list);
 void restore_std_fds(int in, int out);
 int  dup_std_fds(int *in, int *out);
 int	list_size(t_list *lst);
@@ -192,16 +191,23 @@ void	parent_process(int *prev_fd, t_list *cmds, int pipe_fd[2]);
 int check_dir(const char *path);
 void check_access_abs_path(t_list *exec);
 void check_relat_path_edge_cases(t_list *exec );
-
-/// builtins
+char **env_to_array(t_env *env);
 int	is_builtin(char *cmd);
-int	run_builtin(char **cmd, char ***env);
+int	run_builtin(char **cmd);
 int	ft_echo(char **args);
 int	ft_cd(char **args);
-int	ft_pwd(char **args);
+int	ft_pwd(void);
 int	ft_exit(char **args);
-int	ft_env(char **args, char **env);
-int	ft_export(char **args, char ***env);
-int	ft_unset(char **args, char ***env);
+int	ft_env(void);
+int	ft_export(char **args);
+int	ft_unset(char **args);
+t_env   *find_env(t_env *env ,char *key);
+char    *get_env_value(t_env *env ,char *key);
+void    set_env(t_env **env ,char *key,char *value);
+void    unset_env(t_env **env ,char *key);
+// signals.c
+void setup_signals_parent(void);
+void setup_signals_child(void);
+void setup_signals_heredoc(void);
 
 #endif

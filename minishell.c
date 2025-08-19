@@ -28,14 +28,13 @@ void    initialise_info(char **env)
     info->exit_status = 0;
 }
 
-static void shell_loop(char **env)
+static void shell_loop(void)
 {
     char    *line;
     t_list  *list;
     while (1)
     {
-        signal(SIGINT , SIG_IGN);
-        signal(SIGQUIT , SIG_IGN);
+        setup_signals_parent();
         line = readline(PROMPT);
         if(!line) {
             write(1,"exit\n",5);
@@ -46,13 +45,10 @@ static void shell_loop(char **env)
             continue ;
         list = input_analysis(line);
         if (!list)
-        {
-            // static_info()->exit_status = 2;
             continue ;
-        }
         ft_heredoc(list);
-       if (!check_what_to_execute(list, &env))
-            execution(list, env);
+       if (!check_what_to_execute(list))
+            execution(list);
         // print_command_list(list);
         //free_command_list(list); < Makfile cat > p = exit; 
     }
@@ -63,8 +59,7 @@ int     main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
     initialise_info(env);
-    signals();
-    shell_loop(env);
+    shell_loop();
     ft_free_all();
     return (0);
 }

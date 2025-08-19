@@ -36,7 +36,7 @@ void restore_std_fds(int in, int out)
     close(out);
 }
 
-int     check_what_to_execute(t_list *list, char ***env)
+int     check_what_to_execute(t_list *list)
 {
     t_info  *info;
     int     saved_in;
@@ -51,7 +51,7 @@ int     check_what_to_execute(t_list *list, char ***env)
         return (1);
     }
     info = static_info();
-    info->exit_status = run_builtin(list->cmds, env);
+    info->exit_status = run_builtin(list->cmds);
     restore_std_fds(saved_in, saved_out);
     return (1);
 }
