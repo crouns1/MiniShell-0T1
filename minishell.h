@@ -166,7 +166,7 @@ int							get_len(char *s, int reset);
 t_split						*remove_quotes(t_split *list);
 t_split						*split_and_unquotes(char *string, char *map);
 void						free_command_list(t_list *list);
-void    ft_heredoc(t_list *list);
+int    ft_heredoc(t_list *list);
 void    get_variables_heredoc(char *token, char **string);
 //// ddddddd
 void    execute_absolute_path(t_list *exec, char **env);
