@@ -12,56 +12,31 @@
 
 #include "minishell.h"
 
-// #define SYMBOLS "! \" # $ % & ' ( ) * + , - .
-// 	/ : ; < = > ? @ [ \\ ] ^ ` { | } ~"
-
-// void ft_sort(t_env *env) {
-//     char c;
-//     while(env->s) {
-//         while(env->next) {
-//             if(env > env->next) {
-//                 c = env;
-//                 env = env->next;
-//                 env->next = c;
-//             }
-//         }
-//     }
-// }
-
-
-// void ft_sort(char **args) {
-//     int i = 0;
-//     int  j;
-//     while(args[i]) {
-//         j = 0;
-        
-//     }
-// }
-
-
-// jait-chd@c1r3p11:~$ export a=adasdaa  5=dasada =
-// bash: export: `5=dasada': not a valid identifier
-// bash: export: `=': not a valid identifier
-// jait-chd@c1r3p11:~$
-
-int	check_valid_id(char c)
+int	is_valid_identifier(const char *s)
 {
-	if ((c <= 'a' && c >= 'z') || (c <= 'A' && c >= 'Z'))
+	int i;
+
+	if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
 		return (0);
+	i = 1;
+	while (s[i] && s[i] != '=')
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
-// no spesial symbols as 2nd arg also no numbers
 int	ft_export(char **args)
 {
 	int		i;
-	int		j;
 	t_env	*env;
 	char	*eq;
+	int		ret;
 
-	i = 1;
-	j = 0;
-	if (!args[i])
+	ret = 0;
+	if (!args[1])
 	{
 		env = static_info()->env;
 		while (env)
@@ -71,27 +46,28 @@ int	ft_export(char **args)
 		}
 		return (0);
 	}
-	while (args[2][j])
-	{
-		if ((args[2][j] >= '0' && args[2][j] <= '9'))
-		{
-			ft_putstr_fd(args[2], 2);
-			ft_putendl_fd(" : not a valid identifier", 2);
-			static_info()->exit_status = 1;
-		}
-		j++;
-	}
+	i = 1;
 	while (args[i])
 	{
-		eq = ft_strchr(args[i], '=');
-		if (eq)
+		if (!is_valid_identifier(args[i]))
 		{
-			*eq = '\0';
-			set_env(&static_info()->env, args[i], eq + 1);
+			ft_putstr_fd(args[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			ret = 1;
 		}
 		else
-			set_env(&static_info()->env, args[i], "");
+		{
+			eq = ft_strchr(args[i], '=');
+			if (eq)
+			{
+				*eq = '\0';
+				set_env(&static_info()->env, args[i], eq + 1);
+			}
+			else
+				set_env(&static_info()->env, args[i], "");
+		}
 		i++;
 	}
-	return (0);
+	static_info()->exit_status = ret;
+	return (ret);
 }

@@ -35,13 +35,7 @@ static void sigquit_child(int signo)
     signal(SIGQUIT , SIG_DFL);
 }
 
-static void sigint_heredoc(int signo)
-{
-    (void)signo;
-    write(1, "\n", 1);
-    close(STDIN_FILENO); 
-    static_info()->exit_status = 130;
-}
+
 
 
 void setup_signals_parent(void)
@@ -56,8 +50,3 @@ void setup_signals_child(void)
     signal(SIGQUIT, sigquit_child);
 }
 
-void setup_signals_heredoc(void)
-{
-    signal(SIGINT, sigint_heredoc);
-    signal(SIGQUIT, SIG_IGN);
-}

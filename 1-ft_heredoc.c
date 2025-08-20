@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+static void	setup_signals_heredoc_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+static void	setup_signals_heredoc_parent(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+
 static char	*get_name(void)
 {
 	static char		buf[9];
@@ -86,25 +99,35 @@ int	heredocument(char *delimiter)
 	int		fd;
 	char	*name;
 	pid_t	pid;
-	// int status = 0;
+	int status;
 	// int sig;
 	name = get_name();
 	delimiter = quotes(delimiter, &f);
 	fd = open(name, O_CREAT | O_RDWR, 0644);
-	// signal(SIGINT , SIG_IGN);
-		// setup_signals_heredoc();
-
+	setup_signals_heredoc_parent();
 	pid = fork();
 	if (pid == -1)
 	ft_putendl_fd("Error : fork failed on herdoc" , 2);
 	if (pid == 0)
 	{
-		// setup_signals_heredoc();
-		// signal(SIGINT , SIG_DFL);
+		setup_signals_heredoc_child();
 		child(fd, delimiter, f);
+		close(fd);
 		exit(0);
 	}
 	waitpid(pid, NULL, 0);
+	setup_signals_parent();
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+		{
+			write(1, "\n", 1);
+			static_info()->exit_status = 130;
+		}
+		else if (WTERMSIG(status) == SIGQUIT)
+			static_info()->exit_status = 131;
+		return (-1); /* heredoc interrupted */
+	}
 		//  if (WIFEXITED(status))
 		// 	 static_info()->exit_status = 0;
 		// 	if (WIFSIGNALED(status))
@@ -122,6 +145,7 @@ int	heredocument(char *delimiter)
 		// 			// info->exit_status = 131;
 		// 		}
 		// 	}
+		static_info()->exit_status = 0;
 	close(fd);
 	fd = open(name, O_RDWR);
 	unlink(name);

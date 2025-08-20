@@ -96,6 +96,9 @@ typedef struct s_gc
 typedef struct s_env
 {
 	char					*s;
+	char			*key;
+	char			*value;
+	int				exported; 
 	struct s_env			*next;
 }							t_env;
 /* info struct */
@@ -200,11 +203,14 @@ int	ft_pwd(void);
 int	ft_exit(char **args);
 int	ft_env(void);
 int	ft_export(char **args);
+int	ft_isdigit(int c);
+int	ft_isalnum(int c);
 int	ft_unset(char **args);
 t_env   *find_env(t_env *env ,char *key);
 char    *get_env_value(t_env *env ,char *key);
 void    set_env(t_env **env ,char *key,char *value);
 void    unset_env(t_env **env ,char *key);
+int	ft_isalpha(int c);
 // signals.c
 void setup_signals_parent(void);
 void setup_signals_child(void);
