@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   5-getenv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 21:57:12 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/11 21:58:28 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/20 02:30:54 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*get_env(t_env *env, char *s)
@@ -55,18 +56,15 @@ static char	*itoa(int n)
 	}
 	return (s);
 }
-
 char	*ft_getenv(char *token, int *len)
 {
 	char	*s;
-	t_info	*info;
 
-	info = static_info();
 	s = ft_substr((token + 1), *len - 1);
 	if (s[0] == '?' && !s[1])
-		return (itoa(info->exit_status));
+		s = itoa(static_info()->exit_status);
 	else
-		s = get_env(info->env, s);
+		s = get_env(static_info()->env, s);
 	*len = ft_strlen(s);
 	return (s);
 }

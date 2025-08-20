@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 20:50:39 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 23:39:21 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/20 06:11:41 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void check_access_abs_path(t_list *exec) {
         ft_putstr_fd(exec->cmds[0] , 2);
         ft_putendl_fd(" : No such file or directory" , 2);
             exit(127);
-    } else if(access(exec->cmds[0] , X_OK) == -1) {
+    } 
+    if(access(exec->cmds[0] , X_OK) == -1) {
         ft_putstr_fd(exec->cmds[0] , 2);
         ft_putendl_fd(" : permission denied" , 2);
         exit(126);

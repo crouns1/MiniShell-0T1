@@ -12,16 +12,18 @@
 
 #include "minishell.h"
 
-int ft_env(void)
+int	ft_env(void)
 {
-    t_env *env = static_info()->env;
-    while (env)
-    {
-        printf("%s\n", env->s);
-        env = env->next;
-        // if(env->next) {
-            // ft_putendl_fd("args not on point " , 2);
-        // }
-    }
-    return 0;
+	t_env	*env;
+
+	env = static_info()->env;
+	while (env)
+	{
+		printf("%s\n", env->s);
+		env = env->next;
+		// if(env->next) {
+		// ft_putendl_fd("args not on point " , 2);
+		// }
+	}
+	return (0);
 }

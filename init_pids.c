@@ -12,15 +12,14 @@
 
 #include "minishell.h"
 
-
-int init_pids(t_list *cmds, pid_t **pids, int *prev_fd)
+int	init_pids(t_list *cmds, pid_t **pids, int *prev_fd)
 {
-    int count;
+	int count;
 
-    count = list_size(cmds);
-    *pids = ft_malloc(count);
-    if (!*pids)
-        return (-1);
-    *prev_fd = -1;
-    return (count);
+	count = list_size(cmds);
+	*pids = ft_malloc(count);
+	if (!*pids)
+		return (-1);
+	*prev_fd = -1;
+	return (count);
 }

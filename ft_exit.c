@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 05:46:20 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/20 00:36:18 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/20 05:02:58 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_exit(char **args)
 			exit(static_info()->exit_status);
 	else if (!numeric(args[1]))
 	{
-		write(2, "minishell: exit: ", 17);
+		write(2, "minishell : exit: ", 17);
 		write(2, args[1], strlen(args[1]));
 		write(2, ": numeric argument required\n", 28);
 		exit(2);

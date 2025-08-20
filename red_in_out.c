@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   red_in_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 00:00:00 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 22:30:12 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/20 06:54:00 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int handle_redirections(t_list *exec)
     r = exec->rediraction;
     while (r)
     {
+        if (r->ambiguous)
+        {
+            ft_putendl_fd("ambiguous rediraction", 2);
+            return (-1);
+        }
         fd = open_file(r);
         if (fd == -2)
         {

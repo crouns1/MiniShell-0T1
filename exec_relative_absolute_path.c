@@ -3,41 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   exec_relative_absolute_path.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/18 23:40:44 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/20 05:59:37 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+void edge_check(t_list *exec) {
+   if(!ft_strncmp(exec->cmds[0], ".", ft_strlen(exec->cmds[0])))
+        {
+		ft_putendl_fd(" . : filename argument required", 2);
+		exit(2);
+	}
+	else if (!ft_strncmp(exec->cmds[0], "..", ft_strlen(exec->cmds[0])))
+	{
+		ft_putendl_fd(" .. : command not found", 2);
+		exit(127);
+    }
+}
+
 void execute_absolute_path(t_list *exec, char **env)
 {
     if (!exec->cmds[0])
         exit(0);
-    if (exec->cmds[0][0] == '/' || (exec->cmds[0][0] == '.' ))
+        
+    if (exec->cmds[0][0] == '/' || (exec->cmds[0][0] == '.') || ft_strchr(exec->cmds[0] , '/'))
     {
-        if(!ft_strncmp(exec->cmds[0], ".", ft_strlen(exec->cmds[0])))
-        {
-		ft_putstr_fd(" . : filename argument required\n", 2);
-		exit(2);
-	}
-	if (!ft_strncmp(exec->cmds[0], "..", ft_strlen(exec->cmds[0])))
-	{
-		ft_putstr_fd(" .. : command not found\n", 2);
-		exit(127);
-    }
+        edge_check(exec);
+        check_access_abs_path(exec);
         if(check_dir(exec->cmds[0]))
         {
             ft_putstr_fd(exec->cmds[0] , 2);
             ft_putendl_fd(" : Is a directory" , 2);
             exit(126);
         }
-        check_access_abs_path(exec);
         if (execve(exec->cmds[0], exec->cmds, env) == -1)
         {
-            ft_putstr_fd("error : exceve failed" , 2);
+            ft_putendl_fd("error : exceve failed" , 2);
             exit(1);
         }
     }
@@ -76,7 +82,7 @@ void execute_relative_path(t_list *exec, char **env)
     exec->paths = extract_paths(env, exec);
     if (!exec->paths)
     {
-         ft_putstr_fd(exec->cmds[0] , 2);
+        ft_putstr_fd(exec->cmds[0] , 2);
         ft_putendl_fd(" : command not found" , 2);
         exit(127);
     }

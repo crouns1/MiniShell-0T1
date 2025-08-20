@@ -10,16 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-int ft_unset(char **args)
+int	ft_unset(char **args)
 {
-    int i = 1;
-    while (args[i])
-    {
-        unset_env(&static_info()->env, args[i]);
-        i++;
-    }
-    return 0;
+	int	i;
+
+	i = 1;
+	while (args[i])
+	{
+		unset_env(&static_info()->env, args[i]);
+		i++;
+	}
+	return (0);
 }
