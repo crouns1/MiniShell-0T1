@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 11:47:50 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:06:58 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_rediraction
 	struct s_rediraction	*prev;
 	char					*token;
 	int						type;
-        int                                             fd;
+	int                   fd;
 	int						ambiguous;
 	struct s_rediraction	*next;
 }							t_rediraction;
