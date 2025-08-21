@@ -28,44 +28,56 @@ int	is_valid_identifier(const char *s)
 	return (1);
 }
 
+// print current environment entries in export format
+static void print_env_list(t_env *env)
+{
+	while (env)
+	{
+		printf("declare -x %s\n", env->s);
+		env = env->next;
+	}
+}
+
+// handle a single export argument, return 0 on success, 1 on invalid id
+static int handle_export_arg(char *arg)
+{
+	char *eq;
+
+	if (!is_valid_identifier(arg))
+	{
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		return (1);
+	}
+	eq = ft_strchr(arg, '=');
+	if (eq)
+	{
+		*eq = '\0';
+		set_env(&static_info()->env, arg, eq + 1);
+	}
+	else
+	{
+		set_env(&static_info()->env, arg, "");
+	}
+	return (0);
+}
+
 int	ft_export(char **args)
 {
 	int		i;
-	t_env	*env;
-	char	*eq;
 	int		ret;
 
 	ret = 0;
 	if (!args[1])
 	{
-		env = static_info()->env;
-		while (env)
-		{
-			printf("declare -x %s\n", env->s);
-			env = env->next;
-		}
+		print_env_list(static_info()->env);
 		return (0);
 	}
 	i = 1;
 	while (args[i])
 	{
-		if (!is_valid_identifier(args[i]))
-		{
-			ft_putstr_fd(args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
+		if (handle_export_arg(args[i]))
 			ret = 1;
-		}
-		else
-		{
-			eq = ft_strchr(args[i], '=');
-			if (eq)
-			{
-				*eq = '\0';
-				set_env(&static_info()->env, args[i], eq + 1);
-			}
-			else
-				set_env(&static_info()->env, args[i], "");
-		}
 		i++;
 	}
 	static_info()->exit_status = ret;

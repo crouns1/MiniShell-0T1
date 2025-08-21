@@ -19,7 +19,8 @@ int	ft_env(void)
 	env = static_info()->env;
 	while (env)
 	{
-		printf("%s\n", env->s);
+		if (ft_strchr(env->s, '='))
+			printf("%s\n", env->s);
 		env = env->next;
 		// if(env->next) {
 		// ft_putendl_fd("args not on point " , 2);

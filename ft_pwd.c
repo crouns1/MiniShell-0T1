@@ -15,13 +15,17 @@
 int	ft_pwd(void)
 {
 	char	*pwd;
-		char buf[4096];
+	char	*buf;
 
 	pwd = get_env_value(static_info()->env, "PWD");
 	if (!pwd)
 	{
-		if (getcwd(buf, sizeof(buf)))
+		buf = getcwd(NULL, 0);
+		if (buf)
+		{
 			printf("%s\n", buf);
+			free(buf);
+		}
 		else
 			ft_putendl_fd("error : pwd failed", 2);
 	}
