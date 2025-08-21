@@ -6,12 +6,11 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:29:55 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/21 15:49:19 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:26:47 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 static void	setup_signals_heredoc_child(void)
 {
@@ -22,7 +21,6 @@ static void	setup_signals_heredoc_parent(void)
 {
 	signal(SIGINT, SIG_IGN);
 }
-
 
 static char	*get_name(void)
 {
@@ -94,16 +92,18 @@ static char	*strip_quotes(char *s)
 
 static void	child(int fd, char *delimiter, int quoted)
 {
-	char	*s = NULL;
+	char	*s;
 	char	*line;
 
+	s = NULL;
 	while (1)
-	{		
+	{
 		s = NULL;
 		line = readline("> ");
 		if (!line)
 		{
-			printf("warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+			printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
+				delimiter);
 			break ;
 		}
 		else if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
@@ -117,7 +117,6 @@ static void	child(int fd, char *delimiter, int quoted)
 		if (!quoted)
 			free(line);
 	}
-	exit(0);
 }
 
 int	heredocument(char *orig_delim)
@@ -136,7 +135,7 @@ int	heredocument(char *orig_delim)
 	setup_signals_heredoc_parent();
 	pid = fork();
 	if (pid == -1)
-		ft_putendl_fd("Error : fork failed on herdoc" , 2);
+		ft_putendl_fd("Error : fork failed on herdoc", 2);
 	if (pid == 0)
 	{
 		setup_signals_heredoc_child();
@@ -145,7 +144,7 @@ int	heredocument(char *orig_delim)
 		exit(0);
 	}
 	waitpid(pid, &status, 0);
-	signal(SIGINT , SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
@@ -153,11 +152,12 @@ int	heredocument(char *orig_delim)
 			write(1, "\n", 1);
 			static_info()->exit_status = 130;
 		}
-		unlink(name);
+		// unlink(name);
+		close(fd);
 		return (-1);
 	}
 	static_info()->exit_status = 0;
-	close(fd); 
+	close(fd);
 	fd = open(name, O_RDWR);
 	unlink(name);
 	return (fd);
@@ -177,12 +177,12 @@ int	ft_heredoc(t_list *list)
 			if (r->type == TOKEN_HEREDOC)
 			{
 				r->fd = heredocument(r->token);
-				if(r->fd == -1)
-					return 0;
+				if (r->fd == -1)
+					return (0);
 			}
 			r = r->next;
 		}
 		tmp = tmp->next;
 	}
-	return 1;
+	return (1);
 }

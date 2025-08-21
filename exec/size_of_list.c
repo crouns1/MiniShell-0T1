@@ -14,7 +14,7 @@
 
 int	list_size(t_list *lst)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (lst)

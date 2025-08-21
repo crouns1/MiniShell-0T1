@@ -6,14 +6,13 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:24:03 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 16:52:23 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/21 18:12:33 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/// @
-///  status 
-void clean_exit(int status)
+
+void	clean_exit(int status)
 {
 	ft_free_all();
 	exit(status);
@@ -25,12 +24,12 @@ void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2])
 	if (handle_redirections(cmds) == -1)
 		clean_exit(1);
 	if (is_builtin(cmds->cmds[0]))
-		exit(run_builtin(cmds->cmds));
+		clean_exit(run_builtin(cmds->cmds));
 	execute_absolute_path(cmds, *env);
 	execute_relative_path(cmds, *env);
 	ft_putstr_fd(cmds->cmds[0], 2);
 	ft_putendl_fd(" : command not found", 2);
-	exit(127);
+	clean_exit(127);
 }
 
 void	parent_process(int *prev_fd, t_list *cmds, int pipe_fd[2])

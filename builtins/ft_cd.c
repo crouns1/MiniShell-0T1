@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 21:46:08 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 15:36:56 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/21 18:45:59 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ int	ft_cd(char **args)
         dir = get_env_value(info->env, "HOME");
     else
         dir = args[1];
+    // if(!dir) {
+    //         ft_putendl_fd("error : HOME not set", 2);
+    //         info->exit_status = 1;
+    // }
     if (!dir || chdir(dir) != 0)
     {
-        ft_putendl_fd("error : HOME not set", 2);
+         ft_putendl_fd("error : HOME not set", 2);
+        // perror("cd");
         info->exit_status = 1;
         return (1);
     }

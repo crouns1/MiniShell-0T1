@@ -12,39 +12,39 @@
 
 #include "../minishell.h"
 
-char *ft_strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
-    size_t  i;
-    char    *cpy;
+	size_t	i;
+	char	*cpy;
 
-    i = 0;
-    cpy = ft_malloc(ft_strlen((char *)s) + 1);
-    while (s[i])
-    {
-        cpy[i] = s[i];
-        i++;
-    }
-    cpy[i] = '\0';
-    return (cpy);
+	i = 0;
+	cpy = ft_malloc(ft_strlen((char *)s) + 1);
+	while (s[i])
+	{
+		cpy[i] = s[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
 }
 
-void    ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-    if (!s)
-        return ;
-    while (*s)
-    {
-        write(fd, s, 1);
-        s++;
-    }
+	if (!s)
+		return ;
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
 }
 
-void    ft_putendl_fd(char *s, int fd)
+void	ft_putendl_fd(char *s, int fd)
 {
-    if (!s)
-        return ;
-    ft_putstr_fd(s, fd);
-    write(fd, "\n", 1);
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
 }
 
 int	ft_isalpha(int c)

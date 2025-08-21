@@ -29,14 +29,14 @@ void	setup_io(int prev_fd, int pipe_fd[2], int has_next)
 
 int	prepare_pipe(t_list *cmds, int pipe_fd[2])
 {
-	t_info *info;
+	t_info	*info;
 
 	if (!cmds->next)
 		return (0);
 	info = static_info();
 	if (pipe(pipe_fd) == -1)
 	{
-		ft_putendl_fd("error : pipe failed" , 2);
+		ft_putendl_fd("error : pipe failed", 2);
 		info->exit_status = 1;
 		return (-1);
 	}

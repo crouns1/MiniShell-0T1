@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-
 int	init_pids(t_list *cmds, pid_t **pids, int *prev_fd)
 {
 	int count;
