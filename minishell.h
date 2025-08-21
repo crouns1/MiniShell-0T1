@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/20 04:23:22 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/21 11:47:50 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,5 +215,7 @@ int	ft_isalpha(int c);
 void setup_signals_parent(void);
 void setup_signals_child(void);
 void setup_signals_heredoc(void);
-
+int cmp_env_str(const char *sa, const char *sb);
+void swap_ptrs(char **a, char **b);
+void bubble_sort_env(char **arr, int count);
 #endif
