@@ -38,7 +38,7 @@ int	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		write(1, args[i], strlen(args[i]));
+		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
 			write(1, " ", 1);
 		i++;

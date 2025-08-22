@@ -23,13 +23,14 @@ int	ft_pwd(void)
 		buf = getcwd(NULL, 0);
 		if (buf)
 		{
-			printf("%s\n", buf);
+			ft_putendl_fd(buf, 1);
 			free(buf);
 		}
 		else
 			ft_putendl_fd("error : pwd failed", 2);
 	}
 	else
-		printf("%s\n", pwd);
+		ft_putendl_fd(pwd , 1);
+
 	return (0);
 }

@@ -12,10 +12,27 @@
 
 #include "../minishell.h"
 
+static int	update_pwd_env(t_info *info)
+{
+    char *cwd = getcwd(NULL, 0);
+    if (cwd)
+    {
+        set_env(&info->env, "OLDPWD", get_env_value(info->env, "PWD"));
+        set_env(&info->env, "PWD", cwd);
+        free(cwd);
+        return (0);
+    }
+    else
+    {
+        ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", 2);
+        info->exit_status = 1;
+        return (1);
+    }
+}
+
 int	ft_cd(char **args)
 {
     char	*dir;
-    char	*cwd;
     t_info	*info;
 
     info = static_info();
@@ -25,28 +42,12 @@ int	ft_cd(char **args)
         dir = get_env_value(info->env, "HOME");
     else
         dir = args[1];
-    // if(!dir) {
-    //         ft_putendl_fd("error : HOME not set", 2);
-    //         info->exit_status = 1;
-    // }
     if (!dir || chdir(dir) != 0)
     {
-         ft_putendl_fd("error : HOME not set", 2);
-        // perror("cd");
+        ft_putendl_fd("error : HOME not set", 2);
         info->exit_status = 1;
         return (1);
     }
-    cwd = getcwd(NULL, 0);
-    if (cwd)
-    {
-        set_env(&info->env, "OLDPWD", get_env_value(info->env, "PWD"));
-        set_env(&info->env, "PWD", cwd);
-        free(cwd);
-    }
-    else
-    {
-        ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", 2);
-        info->exit_status = 1;
-    }
+    update_pwd_env(info);
     return (info->exit_status);
 }
