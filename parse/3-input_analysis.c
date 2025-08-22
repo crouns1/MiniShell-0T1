@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:19:23 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/21 15:35:44 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:24:45 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,15 @@ static t_tokens	*assign_flags(t_tokens *tokens)
 	return (re_assign_flags(tokens));
 }
 
+int check_empty(t_tokens *tokens)
+{
+	while (tokens->next)
+		tokens = tokens->next;
+	if (tokens->flag == TOKEN_PIPE)
+		return 1;
+	return 0;
+}
+
 t_list	*input_analysis(char *line)
 {
 	t_tokens	*tokens;
@@ -103,7 +112,7 @@ t_list	*input_analysis(char *line)
 	if (!tokens)
 		return (NULL);
 	tokens = ft_expand(tokens);
-	if (!tokens)
+	if (!tokens || check_empty(tokens))
 		return (NULL);
 	list = tokens_to_list(tokens);
 	return (list);

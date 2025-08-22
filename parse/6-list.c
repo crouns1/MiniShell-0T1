@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 18:17:04 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/21 15:36:20 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:13:07 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,40 +118,40 @@ t_list	*tokens_to_list(t_tokens *tokens)
 	}
 	return (list);
 }
-void    free_command_list(t_list *list)
-{
-        t_list          *next;
-        t_rediraction   *r_next;
-        int             i;
+// void    free_command_list(t_list *list)
+// {
+//         t_list          *next;
+//         t_rediraction   *r_next;
+//         int             i;
 
-        while (list)
-        {
-                next = list->next;
-                if (list->cmds)
-                {
-                        i = 0;
-                        while (list->cmds[i])
-                                ft_free(list->cmds[i++]);
-                        ft_free(list->cmds);
-						list->cmds = NULL; 
-                }
-        		while (list->rediraction)
-        		{	
-                	r_next = list->rediraction->next;
-                	if (list->rediraction->fd >= 0)
-                        close(list->rediraction->fd);
-                	ft_free(list->rediraction->token);
-                	ft_free(list->rediraction);
-                	list->rediraction = r_next;
-        		}
-                while (list->rediraction)
-                {
-                        r_next = list->rediraction->next;
-                        ft_free(list->rediraction->token);
-                        ft_free(list->rediraction);
-                        list->rediraction = r_next;
-                }
-                ft_free(list);
-                list = next;
-        }
-}
+//         while (list)
+//         {
+//                 next = list->next;
+//                 if (list->cmds)
+//                 {
+//                         i = 0;
+//                         while (list->cmds[i])
+//                                 ft_free(list->cmds[i++]);
+//                         ft_free(list->cmds);
+// 						list->cmds = NULL; 
+//                 }
+//         		while (list->rediraction)
+//         		{	
+//                 	r_next = list->rediraction->next;
+//                 	if (list->rediraction->fd >= 0)
+//                         close(list->rediraction->fd);
+//                 	ft_free(list->rediraction->token);
+//                 	ft_free(list->rediraction);
+//                 	list->rediraction = r_next;
+//         		}
+//                 while (list->rediraction)
+//                 {
+//                         r_next = list->rediraction->next;
+//                         ft_free(list->rediraction->token);
+//                         ft_free(list->rediraction);
+//                         list->rediraction = r_next;
+//                 }
+//                 ft_free(list);
+//                 list = next;
+//         }
+// }

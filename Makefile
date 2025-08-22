@@ -4,6 +4,7 @@ CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror
 
 SRCS = minishell.c \
+       print.c\
        parse/0-env.c \
        parse/0-ft_utils.c \
        parse/0-ft_alloc.c \

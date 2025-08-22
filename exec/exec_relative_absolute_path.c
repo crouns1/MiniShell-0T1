@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/22 17:51:22 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:02:02 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	execute_absolute_path(t_list *exec, char **env)
 		}
 	}
 }
+
 
 static void	try_exec(t_list *exec, char **env, int i)
 {
