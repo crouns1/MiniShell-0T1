@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 18:24:48 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:11:53 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	shell_loop(void)
 			continue ;
 		if(!ft_heredoc(list))
 			continue ;
+	
 		if (!check_what_to_execute(list))
 			execution(list);
 		// print_command_list(list);

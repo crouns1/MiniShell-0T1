@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 18:34:53 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:51:22 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,21 @@ void	execute_absolute_path(t_list *exec, char **env)
 static void	try_exec(t_list *exec, char **env, int i)
 {
 	exec->path = join_by_order(exec->paths[i], '/', exec->cmds[0]);
+	
 	if (check_dir(exec->path))
 	{
 		exec->path = NULL;
 		return ;
 	}
-	if (exec->path && access(exec->path, X_OK | F_OK) == 0)
+	
+	if (exec->path && access(exec->path, F_OK) == 0)
 	{
+		if (access(exec->path, X_OK) == -1)
+		{
+			ft_putstr_fd(exec->cmds[0], 2);
+			ft_putendl_fd(" : permission denied", 2);
+			clean_exit(126);
+		}
 		if (execve(exec->path, exec->cmds, env) == -1)
 		{
 			ft_putendl_fd("error : exec format error", 2);
@@ -66,7 +74,6 @@ static void	try_exec(t_list *exec, char **env, int i)
 	}
 	exec->path = NULL;
 }
-
 void	execute_relative_path(t_list *exec, char **env)
 {
 	int	i;
