@@ -22,7 +22,7 @@ void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2])
 {
 	setup_io(prev_fd, pipe_fd, cmds->next != NULL);
 	if (handle_redirections(cmds) == -1)
-		clean_exit(1);
+		clean_exit(static_info()->exit_status);
 	if (is_builtin(cmds->cmds[0]))
 		clean_exit(run_builtin(cmds->cmds));
 	execute_absolute_path(cmds, *env);

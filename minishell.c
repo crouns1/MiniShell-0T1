@@ -48,7 +48,7 @@ static void	shell_loop(void)
 		list = input_analysis(line);
 		if (!list)
 			continue ;
-		print_command_list(list);
+//		print_command_list(list);
 		if(!ft_heredoc(list))
 			continue ;
 		if (!check_what_to_execute(list))

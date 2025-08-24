@@ -44,7 +44,6 @@ int	ft_cd(char **args)
         dir = args[1];
     if (!dir || chdir(dir) != 0)
     {
-        // ft_putendl_fd("error : HOME not set", 2);
         perror("cd");
         info->exit_status = 1;
         return (1);

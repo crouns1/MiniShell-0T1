@@ -35,23 +35,28 @@ void	restore_std_fds(int in, int out)
 	close(out);
 }
 
-int	check_what_to_execute(t_list *list)
+int check_what_to_execute(t_list *list)
 {
-	t_info	*info;
-	int		saved_in;
-	int		saved_out;
+    t_info *info;
+    int saved_in;
+    int saved_out;
 
-	
-	if (list->next || !is_builtin(list->cmds[0]))
-		return (0);
-	if (dup_std_fds(&saved_in, &saved_out) || handle_redirections(list) == -1)
-	{
-		restore_std_fds(saved_in, saved_out);
-		static_info()->exit_status = 1;
-		return (1);
-	}
-	info = static_info();
-	info->exit_status = run_builtin(list->cmds);
-	restore_std_fds(saved_in, saved_out);
-	return (1);
+    if (list->next || !is_builtin(list->cmds[0]))
+        return (0);
+
+    if (dup_std_fds(&saved_in, &saved_out) != 0)
+    {
+        static_info()->exit_status = 1;
+        return (1);
+    }
+
+    if (handle_redirections(list) == -1)
+    {
+        restore_std_fds(saved_in, saved_out);
+        return (1);
+    }
+    info = static_info();
+    info->exit_status = run_builtin(list->cmds);
+    restore_std_fds(saved_in, saved_out);
+    return (1);
 }

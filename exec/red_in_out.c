@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+#include <errno.h>
 static int	open_file(t_rediraction *r)
 {
 	if (r->type == TOKEN_REDIRECT_OUT)
@@ -27,11 +27,17 @@ static int	open_file(t_rediraction *r)
 
 static int	apply_redirection(t_rediraction *r, int fd)
 {
-	if (fd < 0)
-	{
-		perror(r->token);
-		return (-1);
-	}
+	 if (fd < 0)
+    {
+        perror(r->token);
+        if (errno == EACCES)
+            static_info()->exit_status = 126;
+        else if (errno == ENOENT)
+            static_info()->exit_status = 1;
+        else
+            static_info()->exit_status = 1;
+        return (-1);
+    }
 	if (r->type == TOKEN_REDIRECT_IN || r->type == TOKEN_HEREDOC)
 		dup2(fd, STDIN_FILENO);
 	else
