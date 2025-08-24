@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:13:33 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 17:51:49 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:43:11 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int handle_export_arg(char *arg)
 	}
 	else
 	{
-		set_env(&static_info()->env, arg, "");
+		set_env(&static_info()->env, arg, NULL);
 	}
 	return (0);
 }

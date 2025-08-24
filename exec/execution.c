@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 03:57:21 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/22 17:47:38 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:04:07 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
 	int	pipe_fd[2];
 	int	i;
 
-
 	i = 0;
 	while (cmds)
 	{
@@ -51,11 +50,10 @@ static void	run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
 		if (pids[i] == -1)
 			break ;
 		if (pids[i] == 0)
-		{		
+		{
 			setup_signals_child();
 			child_process(cmds, &env, prev_fd, pipe_fd);
 		}
-		// close_hereedoc(cmds);
 		parent_process(&prev_fd, cmds, pipe_fd);
 		cmds = cmds->next;
 		i++;

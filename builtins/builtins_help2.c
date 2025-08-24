@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:44:37 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 15:36:49 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:27:12 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,30 @@ t_env *find_env(t_env *env, char *key)
 
 char *get_env_value(t_env *env, char *key)
 {
-    t_env *node = find_env(env, key);
-    char *eq;
+    int key_len = ft_strlen(key);
 
-    if (!node)
-        return NULL;
-    eq = ft_strchr(node->s, '=');
-    if (!eq)
-        return NULL;
-    return eq + 1;
+    while (env)
+    {
+        if (ft_strncmp(env->s, key, key_len) == 0 && env->s[key_len] == '=')
+        {
+            return (env->s + key_len + 1); 
+        }
+        env = env->next;
+    }
+    return NULL;
 }
+// char *get_env_value(t_env *env, char *key)
+// {
+//     t_env *node = find_env(env, key);
+//     char *eq;
+
+//     if (!node)
+//         return NULL;
+//     eq = ft_strchr(node->s, '=');
+//     if (!eq)
+//         return NULL;
+//     return eq + 1;
+// }
 
 int cmp_env_str(const char *sa, const char *sb)
 {

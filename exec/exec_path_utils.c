@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 20:50:39 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 18:12:48 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:54:56 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,32 @@ void	check_access_abs_path(t_list *exec)
 	}
 }
 
-void	check_relat_path_edge_cases(t_list *exec)
+void	edge_check(t_list *exec)
 {
 	if (!ft_strncmp(exec->cmds[0], ".", ft_strlen(exec->cmds[0])))
 	{
-		ft_putstr_fd(exec->cmds[0], 2);
-		ft_putendl_fd(" : command not found", 2);
-		clean_exit(127);
+		ft_putendl_fd(" . : filename argument required", 2);
+		clean_exit(2);
 	}
 	else if (!ft_strncmp(exec->cmds[0], "..", ft_strlen(exec->cmds[0])))
 	{
-		ft_putstr_fd(exec->cmds[0], 2);
-		ft_putendl_fd(" : command not found", 2);
+		ft_putendl_fd(" .. : command not found", 2);
 		clean_exit(127);
 	}
 }
+
+// void	check_relat_path_edge_cases(t_list *exec)
+// {
+// 	if (!ft_strncmp(exec->cmds[0], ".", ft_strlen(exec->cmds[0])))
+// 	{
+// 		ft_putstr_fd(exec->cmds[0], 2);
+// 		ft_putendl_fd(" : command not found", 2);
+// 		clean_exit(127);
+// 	}
+// 	else if (!ft_strncmp(exec->cmds[0], "..", ft_strlen(exec->cmds[0])))
+// 	{
+// 		ft_putstr_fd(exec->cmds[0], 2);
+// 		ft_putendl_fd(" : command not found", 2);
+// 		clean_exit(127);
+// 	}
+// }

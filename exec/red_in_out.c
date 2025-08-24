@@ -6,12 +6,12 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 00:00:00 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 17:12:09 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:46:14 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <errno.h>
+
 static int	open_file(t_rediraction *r)
 {
 	if (r->type == TOKEN_REDIRECT_OUT)
@@ -27,17 +27,12 @@ static int	open_file(t_rediraction *r)
 
 static int	apply_redirection(t_rediraction *r, int fd)
 {
-	 if (fd < 0)
-    {
-        perror(r->token);
-        if (errno == EACCES)
-            static_info()->exit_status = 126;
-        else if (errno == ENOENT)
-            static_info()->exit_status = 1;
-        else
-            static_info()->exit_status = 1;
-        return (-1);
-    }
+	if (fd < 0)
+	{
+		perror(r->token);
+		static_info()->exit_status = 1;
+		return (-1);
+	}
 	if (r->type == TOKEN_REDIRECT_IN || r->type == TOKEN_HEREDOC)
 		dup2(fd, STDIN_FILENO);
 	else

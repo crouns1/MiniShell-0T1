@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:26:37 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 18:17:09 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:39:46 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ char	**extract_paths(char **env, t_list *exec)
 
 char	*join_by_order(char const *s1, char b_slash, char const *s2)
 {
-	char *str;
-	size_t i = 0, j = 0;
+	char	*str;
+	size_t	i = 0, j;
 
+	i = 0, j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-
 	str = (char *)ft_malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 2));
-
 	while (s1[j])
 		str[i++] = s1[j++];
 	str[i++] = b_slash;

@@ -6,11 +6,27 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:25:59 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 15:38:11 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:33:07 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_strdup(const char *s)
+{
+	size_t	i;
+	char	*cpy;
+
+	i = 0;
+	cpy = ft_malloc(ft_strlen((char *)s) + 1);
+	while (s[i])
+	{
+		cpy[i] = s[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
+}
 
 void	setup_io(int prev_fd, int pipe_fd[2], int has_next)
 {

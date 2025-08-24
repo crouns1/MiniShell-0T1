@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 17:37:13 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:07:17 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <signal.h>
+#include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -107,37 +108,8 @@ typedef struct s_info
 	t_env					*env;
 	int exit_status;
 }							t_info;
-/*
-// Prototypes
-t_info						*static_info(void);
-t_env						*arr_list(char **env);
-t_list						*input_analysis(char *line);
-int							ft_strlen(char *s);
-int							ft_strncmp(char *s1, char *s2, int n);
-char						*ft_substr(char *s, int len);
-char						*ft_strchr(char *s, int c);
-int							check_input(char *line);
-t_tokens					*split_and_store(char *line);
-void						free_tokens(t_tokens *tokens);
-t_tokens					*variable_expansion(t_tokens *tokens);
-t_list						*tokens_to_list(t_tokens *tokens);
-void						print_command_list(t_list *list);
-void						free_command_list(t_list *list);
-t_gc						**static_gc(void);
-void						ft_free_all(void);
-int							append_gc(void *ptr);
-void						*ft_malloc(size_t size);
-void						ft_free(void *ptr);
-void						free_tokens(t_tokens *tokens);
-t_tokens					*ft_expand(t_tokens *tokens);
-char						*ft_getenv(char *token, int *len);
-char						*ft_strjoin(char *s1, char *s2);
-char						*fill_str(int len, char c);
-int							get_var_len(char *s);
-int							get_len(char *s, int reset);
-t_split						*split_preserve_quotes(char *s, char *map);
-*/
-// peer stuff
+
+
 t_info						*static_info(void);
 t_env						*arr_list(char **env);
 t_list						*input_analysis(char *line);
@@ -166,9 +138,9 @@ int							get_len(char *s, int reset);
 t_split						*remove_quotes(t_split *list);
 t_split						*split_and_unquotes(char *string, char *map);
 void						free_command_list(t_list *list);
+void	edge_check(t_list *exec);
 int    ft_heredoc(t_list *list);
 void    get_variables_heredoc(char *token, char **string);
-//// ddddddd
 void    execute_absolute_path(t_list *exec, char **env);
 void    execute_relative_path(t_list *exec, char **env);
 char    **extract_paths(char **env, t_list *exec);
@@ -193,7 +165,7 @@ void	child_process(t_list *cmds, char ***env, int prev_fd, int pipe_fd[2]);
 void	parent_process(int *prev_fd, t_list *cmds, int pipe_fd[2]);
 int check_dir(const char *path);
 void check_access_abs_path(t_list *exec);
-void check_relat_path_edge_cases(t_list *exec );
+// void check_relat_path_edge_cases(t_list *exec );
 char **env_to_array(t_env *env);
 int	is_builtin(char *cmd);
 int	run_builtin(char **cmd);
@@ -211,10 +183,9 @@ char    *get_env_value(t_env *env ,char *key);
 void    set_env(t_env **env ,char *key,char *value);
 void    unset_env(t_env **env ,char *key);
 int	ft_isalpha(int c);
-// signals.c
 void setup_signals_parent(void);
 void setup_signals_child(void);
-void setup_signals_heredoc(void);
+// void setup_signals_heredoc(void);
 int cmp_env_str(const char *sa, const char *sb);
 void swap_ptrs(char **a, char **b);
 void bubble_sort_env(char **arr, int count);

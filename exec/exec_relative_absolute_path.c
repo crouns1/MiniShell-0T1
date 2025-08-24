@@ -6,25 +6,11 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/22 18:02:02 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:38:08 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	edge_check(t_list *exec)
-{
-	if (!ft_strncmp(exec->cmds[0], ".", ft_strlen(exec->cmds[0])))
-	{
-		ft_putendl_fd(" . : filename argument required", 2);
-		clean_exit(2);
-	}
-	else if (!ft_strncmp(exec->cmds[0], "..", ft_strlen(exec->cmds[0])))
-	{
-		ft_putendl_fd(" .. : command not found", 2);
-		clean_exit(127);
-	}
-}
 
 void	execute_absolute_path(t_list *exec, char **env)
 {
@@ -48,17 +34,14 @@ void	execute_absolute_path(t_list *exec, char **env)
 	}
 }
 
-
 static void	try_exec(t_list *exec, char **env, int i)
 {
 	exec->path = join_by_order(exec->paths[i], '/', exec->cmds[0]);
-	
 	if (check_dir(exec->path))
 	{
 		exec->path = NULL;
 		return ;
 	}
-	
 	if (exec->path && access(exec->path, F_OK) == 0)
 	{
 		if (access(exec->path, X_OK) == -1)
@@ -75,13 +58,13 @@ static void	try_exec(t_list *exec, char **env, int i)
 	}
 	exec->path = NULL;
 }
+
 void	execute_relative_path(t_list *exec, char **env)
 {
 	int	i;
 
 	if (!exec->cmds[0])
 		clean_exit(0);
-	check_relat_path_edge_cases(exec);
 	exec->paths = extract_paths(env, exec);
 	if (!exec->paths)
 	{
