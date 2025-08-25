@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 20:50:39 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/24 20:54:56 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:50:08 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,28 @@ int	check_dir(const char *path)
 	}
 	return (S_ISDIR(a.st_mode));
 }
-void check_access_abs_path(t_list *exec)
+void	check_access_abs_path(t_list *exec)
 {
-    struct stat st;
+	struct stat	st;
 
-    if (stat(exec->cmds[0], &st) == -1)
-    {
-        ft_putstr_fd(exec->cmds[0], 2);
-        ft_putendl_fd(" : No such file or directory", 2);
-        clean_exit(127);
-    }
-    if (S_ISDIR(st.st_mode))
-    {
-        ft_putstr_fd(exec->cmds[0], 2);
-        ft_putendl_fd(" : Is a directory", 2);
-        clean_exit(126);
-    }
-    if (access(exec->cmds[0], X_OK) == -1)
-    {
-        ft_putstr_fd(exec->cmds[0], 2);
-        ft_putendl_fd(" : permission denied", 2);
-        clean_exit(126);
-    }
+	if (stat(exec->cmds[0], &st) == -1)
+	{
+		ft_putstr_fd(exec->cmds[0], 2);
+		ft_putendl_fd(" : No such file or directory", 2);
+		clean_exit(127);
+	}
+	if (S_ISDIR(st.st_mode))
+	{
+		ft_putstr_fd(exec->cmds[0], 2);
+		ft_putendl_fd(" : Is a directory", 2);
+		clean_exit(126);
+	}
+	if (access(exec->cmds[0], X_OK) == -1)
+	{
+		ft_putstr_fd(exec->cmds[0], 2);
+		ft_putendl_fd(" : permission denied", 2);
+		clean_exit(126);
+	}
 }
 
 // void	check_access_abs_path(t_list *exec)

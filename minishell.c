@@ -3,32 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 21:09:15 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/24 21:01:46 by jait-chd         ###   ########.fr       */
+/*   Created: 2025/08/03 22:29:56 by mokoubar          #+#    #+#             */
+/*   Updated: 2025/08/25 10:52:29 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
-void	history(char *line)
+static void	history(char *line)
 {
-	if (!line || !*line)
+	if (!*line)
 		return ;
 	add_history(line);
 }
 
-void	initialise_info(char **env)
+static void	initialise_info(char **env)
 {
 	t_info	*info;
 
 	info = static_info();
-	info->env = arr_list(env);
+	info->env = env_list(env);
 	info->exit_status = 0;
 }
 
-static void	shell_loop(void)
+static void	execute(t_list *list)
+{
+	if (ft_heredoc(list))
+		return ;
+	if (!check_what_to_execute(list))
+		execution(list);
+	close_heredoc(list);
+}
+
+static void	minishell(void)
 {
 	char	*line;
 	t_list	*list;
@@ -39,19 +47,15 @@ static void	shell_loop(void)
 		line = readline(PROMPT);
 		if (!line)
 		{
-			ft_putendl_fd("exit" , 1);
-			clean_exit(0);
+			printf("exit\n");
+			break ;
 		}
 		history(line);
 		if (check_input(line))
 			continue ;
 		list = input_analysis(line);
-		if (!list)
-			continue ;
-		if(!ft_heredoc(list))
-			continue ;
-		if (!check_what_to_execute(list))
-			execution(list);
+		execute(list);
+		ft_free_all();
 	}
 }
 
@@ -60,7 +64,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	initialise_info(env);
-	shell_loop();
+	minishell();
+	free_env(static_info()->env);
 	ft_free_all();
-	return (0);
+	return (static_info()->exit_status);
 }

@@ -6,10 +6,9 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 03:57:21 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/24 21:04:07 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 10:35:43 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
 
 static void	finalize_execution(int prev_fd, pid_t *pids, int cmd_count)
@@ -19,29 +18,31 @@ static void	finalize_execution(int prev_fd, pid_t *pids, int cmd_count)
 	wait_children(pids, cmd_count);
 }
 
-// static void	close_heredoc(t_list *list)
-// {
-// 	t_rediraction	*r;
+void	close_heredoc(t_list *list)
+{
+	t_rediraction	*r;
 
-// 	while (list)
-// 	{
-// 		r = list->rediraction;
-// 		while (r)
-// 		{
-// 			if (r->type == TOKEN_HEREDOC)
-// 				close(r->fd);
-// 			r = r->next;
-// 		}
-// 		list = list->next;
-// 	}
-// }
+	while (list)
+	{
+		r = list->rediraction;
+		while (r)
+		{
+			if (r->type == TOKEN_HEREDOC)
+				close(r->fd);
+			r = r->next;
+		}
+		list = list->next;
+	}
+}
 
 static void	run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
 {
-	int	pipe_fd[2];
-	int	i;
+	int		pipe_fd[2];
+	int		i;
+	t_list	*tmp;
 
 	i = 0;
+	tmp = cmds;
 	while (cmds)
 	{
 		if (prepare_pipe(cmds, pipe_fd) == -1)
@@ -53,12 +54,14 @@ static void	run_commands(t_list *cmds, char **env, pid_t *pids, int prev_fd)
 		{
 			setup_signals_child();
 			child_process(cmds, &env, prev_fd, pipe_fd);
+			close_heredoc(tmp);
 		}
 		parent_process(&prev_fd, cmds, pipe_fd);
 		cmds = cmds->next;
 		i++;
 	}
 	finalize_execution(prev_fd, pids, i);
+	close_heredoc(cmds);
 }
 
 void	execution(t_list *cmds)

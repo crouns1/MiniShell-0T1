@@ -3,107 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   1-ft_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:29:55 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/24 20:22:03 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:16:11 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
-
-static void	setup_signals_heredoc_child(void)
-{
-	signal(SIGINT, SIG_DFL);
-}
-
-static void	setup_signals_heredoc_parent(void)
-{
-	signal(SIGINT, SIG_IGN);
-}
-
-static char	*get_name(void)
-{
-	static char		buf[9];
-	unsigned char	c;
-	int				fd;
-	int				i;
-
-	fd = open("/dev/urandom", O_RDONLY);
-	if (fd < 0)
-		return ("12345678");
-	i = 0;
-	while (i < 8)
-	{
-		if (read(fd, &c, 1) != 1)
-		{
-			close(fd);
-			return ("12345678");
-		}
-		if (c >= 33 && c <= 126)
-			buf[i++] = c;
-	}
-	buf[8] = '\0';
-	close(fd);
-	return (buf);
-}
-
-// static char	*quotes(char *s, int *f)
-// {
-// 	t_split	*tmp;
-
-// 	tmp = ft_malloc(sizeof(t_split));
-// 	tmp->string = s;
-// 	tmp->map = fill_str(ft_strlen(s), '0');
-// 	tmp->next = NULL;
-// 	tmp = remove_quotes(tmp);
-// 	*f = 0;
-// 	if (ft_strncmp(s, tmp->string, ft_strlen(s)))
-// 		*f = 1;
-// 	return (tmp->string);
-// }
-
-// Returns 1 if the delimiter contains any quotes, 0 otherwise
-static int	has_quotes(const char *s)
-{
-	while (*s)
-	{
-		if (*s == '\'' || *s == '\"')
-			return (1);
-		s++;
-	}
-	return (0);
-}
-
-// Remove quotes from delimiter for comparison, but keep info if quoted
-static char	*strip_quotes(char *s)
-{
-	t_split	*tmp;
-	char	*result;
-
-	tmp = ft_malloc(sizeof(t_split));
-	tmp->string = s;
-	tmp->map = fill_str(ft_strlen(s), '0');
-	tmp->next = NULL;
-	tmp = remove_quotes(tmp);
-	result = tmp->string;
-	return (result);
-}
+#include <unistd.h>
 
 static void	child(int fd, char *delimiter, int quoted)
 {
 	char	*s;
 	char	*line;
 
-	s = NULL;
 	while (1)
 	{
 		s = NULL;
 		line = readline("> ");
 		if (!line)
 		{
-			printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
-				delimiter);
+			printf("%s (wanted '%s')\n", HEREDOCERR, delimiter);
 			break ;
 		}
 		else if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
@@ -114,53 +34,48 @@ static void	child(int fd, char *delimiter, int quoted)
 			s = line;
 		write(fd, s, ft_strlen(s));
 		write(fd, "\n", 1);
-		if (!quoted)
-			free(line);
+		free(line);
 	}
+	free(line);
 }
 
-int	heredocument(char *orig_delim)
+static void	ft_child(t_fd fd, char *delimiter, int quoted)
 {
+	setup_signals_heredoc_child();
+	child(fd.fd_write, delimiter, quoted);
+	close(fd.fd_read);
+	close(fd.fd_write);
+	ft_free_all();
+	free_env(static_info()->env);
+	exit(0);
+}
+
+int	heredocument(char *delimiter)
+{
+	t_fd	fd;
 	int		quoted;
-	int		fd;
+	int		status;
 	char	*name;
 	pid_t	pid;
-	int		status;
-	char	*delimiter;
 
-	quoted = has_quotes(orig_delim);
-	delimiter = strip_quotes(orig_delim);
 	name = get_name();
-	fd = open(name, O_CREAT | O_RDWR, 0644);
+	delimiter = quotes(delimiter, &quoted);
+	fd.fd_write = open(name, O_CREAT | O_RDWR, 0644);
+	fd.fd_read = open(name, O_RDWR);
+	unlink(name);
+	if (fd.fd_read == -1 || fd.fd_write == -1)
+		return (-1);
 	setup_signals_heredoc_parent();
 	pid = fork();
 	if (pid == -1)
 		ft_putendl_fd("Error : fork failed on herdoc", 2);
 	if (pid == 0)
-	{
-		setup_signals_heredoc_child();
-		child(fd, delimiter, quoted);
-		close(fd);
-		exit(0);
-	}
+		ft_child(fd, delimiter, quoted);
+	setup_signals_parent();
 	waitpid(pid, &status, 0);
-	signal(SIGINT, SIG_IGN);
-	if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGINT)
-		{
-			write(1, "\n", 1);
-			static_info()->exit_status = 130;
-		}
-		// unlink(name);
-		close(fd);
-		return (-1);
-	}
-	static_info()->exit_status = 0;
-	close(fd);
-	fd = open(name, O_RDWR);
-	unlink(name);
-	return (fd);
+	static_info()->exit_status = WEXITSTATUS(status);
+	close(fd.fd_write);
+	return (fd.fd_read);
 }
 
 int	ft_heredoc(t_list *list)
@@ -168,6 +83,8 @@ int	ft_heredoc(t_list *list)
 	t_list			*tmp;
 	t_rediraction	*r;
 
+	if (!list)
+		return (1);
 	tmp = list;
 	while (tmp)
 	{
@@ -178,11 +95,14 @@ int	ft_heredoc(t_list *list)
 			{
 				r->fd = heredocument(r->token);
 				if (r->fd == -1)
-					return (0);
+				{
+					ft_putendl_fd("unable to open a file!", 2);
+					return (1);
+				}
 			}
 			r = r->next;
 		}
 		tmp = tmp->next;
 	}
-	return (1);
+	return (0);
 }
