@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1-ft_heredoc.c                                     :+:      :+:    :+:   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:29:55 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/25 11:16:11 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:54:48 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../minishell.h"
@@ -46,7 +46,6 @@ static void	ft_child(t_fd fd, char *delimiter, int quoted)
 	close(fd.fd_read);
 	close(fd.fd_write);
 	ft_free_all();
-	free_env(static_info()->env);
 	exit(0);
 }
 

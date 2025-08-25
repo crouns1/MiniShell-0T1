@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 21:46:23 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/24 20:20:19 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:52:27 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ int	ft_pwd(void)
 		if (buf)
 		{
 			ft_putendl_fd(buf, 1);
-			free(buf);
+			ft_free(buf);
 		}
 		else
 			ft_putendl_fd("error : pwd failed", 2);
 	}
 	else
-		ft_putendl_fd(pwd , 1);
-
+		ft_putendl_fd(pwd, 1);
 	return (0);
 }

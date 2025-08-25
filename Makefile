@@ -23,9 +23,9 @@ SRCS        =   minishell.c\
 		exec/red_in_out.c\
 		exec/utils.c\
 		exec/init_pids.c\
-		exec/1-ft_heredoc.c\
-		exec/1-heredoc_utils.c\
-		exec/1-heredoc_expantion.c\
+		exec/ft_heredoc.c\
+		exec/heredoc_utils.c\
+		exec/heredoc_expantion.c\
 		exec/ft_split.c\
 		exec/exec_relative_absolute_path.c\
 		exec/child_parent.c\

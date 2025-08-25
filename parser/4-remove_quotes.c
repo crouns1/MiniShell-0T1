@@ -39,7 +39,7 @@ static void	process_string(t_split *tmp)
 	while (tmp->string[i])
 	{
 		if ((tmp->string[i] == '\'' || tmp->string[i] == '\"')
-				&& tmp->map[i] == '0')
+			&& tmp->map[i] == '0')
 		{
 			process_quotes(tmp, s, &i, &j);
 			continue ;

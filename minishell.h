@@ -146,7 +146,6 @@ t_split						*split_and_unquotes(char *string, char *map);
 int							check_string(char *s);
 void						get_variables(char *token, char **string,
 								char **map);
-void						free_env(t_env *env);
 int							check_empty(t_tokens *tokens);
 ///////////////////// Execution //////////////////////////
 int							ft_heredoc(t_list *list);

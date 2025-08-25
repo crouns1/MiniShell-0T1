@@ -14,7 +14,7 @@
 
 int	is_valid_identifier(const char *s)
 {
-	int i;
+	int	i;
 
 	if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
 		return (0);
@@ -28,7 +28,7 @@ int	is_valid_identifier(const char *s)
 	return (1);
 }
 
-static void print_env_list(t_env *env)
+static void	print_env_list(t_env *env)
 {
 	while (env)
 	{
@@ -37,9 +37,9 @@ static void print_env_list(t_env *env)
 	}
 }
 
-static int handle_export_arg(char *arg)
+static int	handle_export_arg(char *arg)
 {
-	char *eq;
+	char	*eq;
 
 	if (!is_valid_identifier(arg))
 	{
@@ -62,8 +62,8 @@ static int handle_export_arg(char *arg)
 
 int	ft_export(char **args)
 {
-	int		i;
-	int		ret;
+	int	i;
+	int	ret;
 
 	ret = 0;
 	if (!args[1])

@@ -6,7 +6,7 @@
 /*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:29:56 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/25 10:52:29 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:18:21 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -55,7 +55,6 @@ static void	minishell(void)
 			continue ;
 		list = input_analysis(line);
 		execute(list);
-		ft_free_all();
 	}
 }
 
@@ -65,7 +64,6 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	initialise_info(env);
 	minishell();
-	free_env(static_info()->env);
 	ft_free_all();
 	return (static_info()->exit_status);
 }

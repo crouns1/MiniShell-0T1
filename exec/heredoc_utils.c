@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1-heredoc_utils.c                                  :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:32:35 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/21 12:57:20 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:54:55 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../minishell.h"
@@ -15,7 +15,6 @@ static void	sighandler_child(int sig)
 {
 	(void)sig;
 	ft_free_all();
-	free_env(static_info()->env);
 	printf("\n");
 	exit(130);
 }

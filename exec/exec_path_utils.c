@@ -6,10 +6,9 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 20:50:39 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/25 11:50:08 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:55:20 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
 
 int	check_dir(const char *path)
@@ -22,6 +21,7 @@ int	check_dir(const char *path)
 	}
 	return (S_ISDIR(a.st_mode));
 }
+
 void	check_access_abs_path(t_list *exec)
 {
 	struct stat	st;

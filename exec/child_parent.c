@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 20:24:03 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/25 11:50:03 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:55:07 by mokoubar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	clean_exit(int status)
 {
-	free_env(static_info()->env);
 	ft_free_all();
 	exit(status);
 }
