@@ -32,9 +32,11 @@ char	**extract_paths(char **env, t_list *exec)
 char	*join_by_order(char const *s1, char b_slash, char const *s2)
 {
 	char	*str;
-	size_t	i = 0, j;
+	size_t	i;
+	size_t	j;
 
-	i = 0, j = 0;
+	i = 0;
+	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
 	str = (char *)ft_malloc(sizeof(char) * (strlen(s1) + strlen(s2) + 2));

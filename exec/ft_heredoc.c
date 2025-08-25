@@ -70,7 +70,6 @@ int	heredocument(char *delimiter)
 		ft_putendl_fd("Error : fork failed on herdoc", 2);
 	if (pid == 0)
 		ft_child(fd, delimiter, quoted);
-	setup_signals_parent();
 	waitpid(pid, &status, 0);
 	static_info()->exit_status = WEXITSTATUS(status);
 	close(fd.fd_write);

@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 00:00:00 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/24 20:46:14 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:49:18 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	handle_redirections(t_list *exec)
 		if (r->ambiguous)
 		{
 			ft_putendl_fd("ambiguous rediraction", 2);
+			static_info()->exit_status = 1;
 			return (-1);
 		}
 		fd = open_file(r);

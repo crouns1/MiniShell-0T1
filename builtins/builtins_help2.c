@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:44:37 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/25 11:58:58 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:43:51 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,77 +41,4 @@ char	*get_env_value(t_env *env, char *key)
 		env = env->next;
 	}
 	return (NULL);
-}
-// char *get_env_value(t_env *env, char *key)
-// {
-//     t_env *node = find_env(env, key);
-//     char *eq;
-
-//     if (!node)
-//         return (NULL);
-//     eq = ft_strchr(node->s, '=');
-//     if (!eq)
-//         return (NULL);
-//     return (eq + 1);
-// }
-
-int	cmp_env_str(const char *sa, const char *sb)
-{
-	size_t	la;
-	size_t	lb;
-	size_t	minl;
-	int		r;
-
-	la = ft_strlen((char *)sa);
-	lb = ft_strlen((char *)sb);
-	if (la < lb)
-		minl = la;
-	else
-		minl = lb;
-	r = ft_strncmp((char *)sa, (char *)sb, (int)minl + 1);
-	if (r != 0)
-		return (r);
-	if (la == lb)
-		return (0);
-	if (la < lb)
-		return (-1);
-	else
-		return (1);
-}
-
-void	swap_ptrs(char **a, char **b)
-{
-	char	*t;
-
-	t = *a;
-	*a = *b;
-	*b = t;
-}
-
-void	bubble_sort_env(char **arr, int count)
-{
-	int	i;
-	int	j;
-	int	swapped;
-
-	i = 0;
-	if (!arr || count < 2)
-		return ;
-	while (i < count - 1)
-	{
-		swapped = 0;
-		j = 0;
-		while (j < count - 1 - i)
-		{
-			if (cmp_env_str(arr[j], arr[j + 1]) > 0)
-			{
-				swap_ptrs(&arr[j], &arr[j + 1]);
-				swapped = 1;
-			}
-			j++;
-		}
-		if (!swapped)
-			break ;
-		i++;
-	}
 }

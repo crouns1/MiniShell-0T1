@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 21:46:08 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/25 15:39:03 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:45:36 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	update_pwd_env(t_info *info)
 	}
 	else
 	{
-		ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: NOSFODIR",2);
+		ft_putendl_fd("cd: error retrieving current directory: NOSFODIR", 2);
 		info->exit_status = 1;
 		return (1);
 	}

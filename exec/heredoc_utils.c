@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mokoubar <mokoubar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:32:35 by mokoubar          #+#    #+#             */
-/*   Updated: 2025/08/25 11:54:55 by mokoubar         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:55:45 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../minishell.h"
 
 static void	sighandler_child(int sig)
 {
 	(void)sig;
-	ft_free_all();
 	printf("\n");
+	ft_free_all();
 	exit(130);
 }
 

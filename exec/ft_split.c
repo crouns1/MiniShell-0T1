@@ -6,12 +6,11 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:13:41 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/21 18:16:54 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:46:53 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <stddef.h>
 
 static size_t	ft_counting(char const *s, char c)
 {
@@ -37,16 +36,6 @@ static void	ft_start_end(const char *s, size_t *i, size_t *j, char c)
 	while (s[*i + *j] && s[*i + *j] != c)
 		(*j)++;
 }
-
-// static char **free_split(char **r, size_t l)
-// {
-//     while (l > 0)
-//     {
-//         free(r[--l]);
-//     }
-//     free(r);
-//     return (0);
-// }
 
 static char	*substr_from(const char *s, size_t start, size_t len)
 {

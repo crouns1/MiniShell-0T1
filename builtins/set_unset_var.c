@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:48:30 by jait-chd          #+#    #+#             */
-/*   Updated: 2025/08/25 15:29:40 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:45:14 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,10 @@ void	set_env(t_env **env, char *key, char *value)
 	}
 	else
 	{
-		if (!node) // only add "a" if it doesn’t exist
+		if (!node)
 			add_env_var(env, ft_strdup(key));
-		// else: do nothing → keep the old "a=value"
 	}
 }
-
-// void set_env(t_env **env, char *key, char *value)
-// {
-//     t_env *node;
-//     char  *kv;
-//     char  *tmp;
-
-//     if (value)
-//     {
-//         tmp = ft_strjoin(ft_strdup(key), "=");
-//         kv = ft_strjoin(tmp, value);
-//     }
-//     else
-//     {
-//         kv = ft_strdup(key);
-//     }
-
-//     node = find_env(*env, key);
-//     if (node)
-//         update_env_var(node, kv);
-//     else
-//         add_env_var(env, kv);
-// }
 
 void	unset_env(t_env **env, char *key)
 {
