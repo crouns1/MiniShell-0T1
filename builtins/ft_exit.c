@@ -12,6 +12,32 @@
 
 	#include "../minishell.h"
 
+static int	ft_atoi(const char *nptr)
+{
+	int	result;
+	int	sign;
+
+	result = 0;
+	sign = 1;
+	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n' || *nptr == '\v'
+		|| *nptr == '\f' || *nptr == '\r')
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			sign = -1;
+		else
+			sign = 1;
+		nptr++;
+	}
+	while (ft_isdigit(*nptr))
+	{
+		result = result * 10 + (*nptr - 48);
+		nptr++;
+	}
+	return (result * sign);
+}
+
 	static int numeric(char *s)
 {
     int i;
@@ -53,6 +79,6 @@
 			write(2, "minishell: exit: too many arguments\n", 36);
 			return (1);
 		}
-		code = atoi(args[1]);
+		code = ft_atoi(args[1]);
 		exit(code);
 	}

@@ -43,22 +43,48 @@ void set_env(t_env **env, char *key, char *value)
     char  *kv;
     char  *tmp;
 
+    node = find_env(*env, key);
+
     if (value)
     {
         tmp = ft_strjoin(ft_strdup(key), "=");
         kv = ft_strjoin(tmp, value);
+        free(tmp);
+        if (node)
+            update_env_var(node, kv);
+        else
+            add_env_var(env, kv);
     }
     else
     {
-        kv = ft_strdup(key);
+        if (!node) // only add "a" if it doesn’t exist
+            add_env_var(env, ft_strdup(key));
+        // else: do nothing → keep the old "a=value"
     }
-
-    node = find_env(*env, key);
-    if (node)
-        update_env_var(node, kv);
-    else
-        add_env_var(env, kv);
 }
+
+// void set_env(t_env **env, char *key, char *value)
+// {
+//     t_env *node;
+//     char  *kv;
+//     char  *tmp;
+
+//     if (value)
+//     {
+//         tmp = ft_strjoin(ft_strdup(key), "=");
+//         kv = ft_strjoin(tmp, value);
+//     }
+//     else
+//     {
+//         kv = ft_strdup(key);
+//     }
+
+//     node = find_env(*env, key);
+//     if (node)
+//         update_env_var(node, kv);
+//     else
+//         add_env_var(env, kv);
+// }
 
 void unset_env(t_env **env, char *key)
 {

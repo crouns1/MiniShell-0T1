@@ -22,22 +22,46 @@ int	check_dir(const char *path)
 	}
 	return (S_ISDIR(a.st_mode));
 }
-
-void	check_access_abs_path(t_list *exec)
+void check_access_abs_path(t_list *exec)
 {
-	if (access(exec->cmds[0], F_OK) == -1)
-	{
-		ft_putstr_fd(exec->cmds[0], 2);
-		ft_putendl_fd(" : No such file or directory", 2);
-		clean_exit(127);
-	}
-	if (access(exec->cmds[0], X_OK) == -1)
-	{
-		ft_putstr_fd(exec->cmds[0], 2);
-		ft_putendl_fd(" : permission denied", 2);
-		clean_exit(126);
-	}
+    struct stat st;
+
+    if (stat(exec->cmds[0], &st) == -1)
+    {
+        ft_putstr_fd(exec->cmds[0], 2);
+        ft_putendl_fd(" : No such file or directory", 2);
+        clean_exit(127);
+    }
+    if (S_ISDIR(st.st_mode))
+    {
+        ft_putstr_fd(exec->cmds[0], 2);
+        ft_putendl_fd(" : Is a directory", 2);
+        clean_exit(126);
+    }
+    if (access(exec->cmds[0], X_OK) == -1)
+    {
+        ft_putstr_fd(exec->cmds[0], 2);
+        ft_putendl_fd(" : permission denied", 2);
+        clean_exit(126);
+    }
 }
+
+// void	check_access_abs_path(t_list *exec)
+// {
+// 	if (access(exec->cmds[0], F_OK) == -1)
+// 	{
+// 		ft_putstr_fd(exec->cmds[0], 2);
+// 		ft_putendl_fd(" : No such file or directory", 2);
+// 		clean_exit(127);
+// 	}
+
+// 	if (access(exec->cmds[0], X_OK) == -1)
+// 	{
+// 		ft_putstr_fd(exec->cmds[0], 2);
+// 		ft_putendl_fd(" : permission denied", 2);
+// 		clean_exit(126);
+// 	}
+// }
 
 void	edge_check(t_list *exec)
 {
